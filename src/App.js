@@ -1,26 +1,33 @@
 import "./App.css";
-import { GlobalProvider } from './configs/context';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { GlobalProvider } from "./configs/context";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from "react-router-dom";
 import { Login } from "./pages/login";
-import { DashboardCustomer } from './pages/dashboard-customer';
-import { DashboardPetugas } from "./pages/dashboard-agent";
+import Dashboard from "./pages/dashboard";
+import NotFound from "./pages/404";
 
 function App() {
   return (
-      <Router>
-        {/* Link/Anchor */}
-        <Link style={{marginRight: "1.25rem"}} to="/login">Login</Link>
-        <Link style={{marginRight: "1.25rem"}} to="/dashboard-customer">Dashboard Customer</Link>
-        <Link style={{marginRight: "1.25rem"}} to="/dashboard-petugas">Dashboard Petugas</Link>
-        {/* Route Point */}
+    <Router>
+      <Switch>
         <Route exact path="/">
-            <Redirect to="/login"/>
+          <Redirect to="/login" />
         </Route>
-        <Route path="/login" component={Login}/>
-        <Route path="/dashboard-customer" component={DashboardCustomer}/>
-        <Route path="/dashboard-petugas" component={DashboardPetugas}/>
-      </Router>
-    )
+
+        <Route exact path="/logout">
+          <Redirect to="/login" />
+        </Route>
+
+        <Route path="/login" component={Login} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
+  );
 }
 
 export default GlobalProvider(App);
