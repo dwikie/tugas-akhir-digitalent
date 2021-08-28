@@ -17,13 +17,13 @@ Then, install dependencies and fetch data to your local machine.
 
 ```bash
 cd tugas-akhir-digitalent
-npm install
+yarn install
 ```
 
-Or if you're using yarn, you can use `yarn install`
-
 Finally, run the development server.
-`npm start` or `yarn start`
+```bash
+yarn start
+```
 
 ## Indonesia
 
@@ -39,10 +39,10 @@ Lalu, install dependencies ke komputer lokal anda.
 
 ```bash
 cd tugas-akhir-digitalent
-npm install
+yarn install
 ```
 
-Atau jika kamu menggunakan yarn, kamu dapat menjalankan `yarn install`
-
 Setelah itu, jalankan proyek secara lokal untuk pengembangan.
-`npm start` or `yarn start`
+```bash
+yarn start
+```
