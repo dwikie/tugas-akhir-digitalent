@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
 import { authenticate } from "../../configs/auth";
 
 export default function FormLogin(props) {
   const [validated, setValidated] = useState(false);
   const [request, setRequest] = useState(false);
-
-  useEffect(() => {
-    console.log(1);
-    return () => console.log(2);
-  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
