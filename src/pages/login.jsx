@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import FormLogin from "../components/login/form-login";
 
-export const Login = (props) => {
+export default function Login(props) {
   return (
     <main className="d-flex vh-100">
       <Card
@@ -14,4 +14,4 @@ export const Login = (props) => {
       </Card>
     </main>
   );
-};
+}
