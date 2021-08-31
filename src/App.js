@@ -1,12 +1,12 @@
 import "./App.css";
-import { GlobalProvider } from "./configs/context";
+import { GlobalProvider } from "./context/global";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom";
-import { Login } from "./pages/login";
+import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import NotFound from "./pages/404";
 
