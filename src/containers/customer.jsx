@@ -11,7 +11,7 @@ export default function DashboardPetugas(props) {
   const { url } = props.match;
   const navItems = [
     {
-      path: "/",
+      path: "",
       label: "Beranda",
     },
     {
