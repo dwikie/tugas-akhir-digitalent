@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import "react-datepicker/src/stylesheets/datepicker.scss";
+import "react-datepicker/dist/react-datepicker.css";
 import { AiFillCalendar } from "react-icons/ai";
 
 export default function PengajuanKPR() {
@@ -116,14 +116,14 @@ export default function PengajuanKPR() {
         <Col xs={7}>
           <Form.Group className="mb-2">
             <Form.Label>Bukti Slip Gaji Suami dan/atau Istri</Form.Label>
-            <Form.Control type="file" required   />
+            <Form.Control type="file" required />
             <Form.Control.Feedback type="invalid">
               Mohon masukkan bukti slup gaji suami dan/atau istri
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
       </Row>
-      <br/>
+      <br />
       <div className="d-flex justify-content-end">
         <Button type="submit">Submit Pengajuan KPR</Button>
       </div>
