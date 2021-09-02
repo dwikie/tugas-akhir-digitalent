@@ -58,7 +58,7 @@ export default function ListPengajuan() {
       {/* Searh Form and Button Download Laporan */}
       <div>
         <Form className="my-3">
-          <Row>
+          <Row> 
             {/* Search Form */}
             <Col xs="auto">
               <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
