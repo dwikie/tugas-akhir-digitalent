@@ -50,15 +50,20 @@ const datas = [
   },
 ];
 
-export default function ListPengajuan() {
+export default function ListPengajuan(props) {
+  const { url } = props.match;
+  function handleActionEditButton(id) {
+    props.history.push(`${url}/${id}`);
+  }
+
   return (
     <div>
-      <p style={{ textAlign: "center" }}>Daftar Pengajuan KPR</p>
+      <h3 className="text-center mb-4">Daftar Pengajuan KPR</h3>
 
       {/* Searh Form and Button Download Laporan */}
       <div>
         <Form className="my-3">
-          <Row> 
+          <Row className="justify-content-between">
             {/* Search Form */}
             <Col xs="auto">
               <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
@@ -82,7 +87,7 @@ export default function ListPengajuan() {
       </div>
 
       {/* Table Pengajuan KPR */}
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>No</th>
@@ -102,7 +107,12 @@ export default function ListPengajuan() {
               <td>{data.status}</td>
               <td>{data.rekomendasi}</td>
               <td>
-                <Button variant="link">Link</Button>
+                <Button
+                  variant="link"
+                  onClick={() => handleActionEditButton(index)}
+                >
+                  Link
+                </Button>
               </td>
             </tr>
           ))}
