@@ -15,7 +15,7 @@ export default function DashboardPetugas(props) {
       label: "Beranda",
     },
     {
-      path: "/list-pengajuan",
+      path: "/pengajuan",
       label: "List Pengajuan",
     },
   ];
@@ -30,10 +30,10 @@ export default function DashboardPetugas(props) {
         <Container>
           <Switch>
             <Route exact path={`${url}/`} component={Beranda} />
-            <Route path={`${url}/list-pengajuan`} component={ListPengajuan} />
+            <Route exact path={`${url}/pengajuan`} component={ListPengajuan} />
             <Route
               exact
-              path={`${url}/detail-pengajuan/:id`}
+              path={`${url}/pengajuan/:id`}
               component={DetailPengajuan}
             />
             <Route component={NotFound} />
