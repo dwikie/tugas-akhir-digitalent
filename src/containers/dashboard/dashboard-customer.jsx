@@ -1,17 +1,17 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Beranda from "../components/customer/beranda";
-import DashboardHeader from "../components/dashboard-header";
-import DokumenTambahan from "../components/customer/dokumen-tambahan";
-import PengajuanKPR from "../components/customer/pengajuan-kpr";
-import NotFound from "../pages/404";
+import Beranda from "../../components/customer/beranda";
+import DashboardHeader from "../../components/dashboard-header";
+import DokumenTambahan from "../../components/customer/dokumen-tambahan";
+import PengajuanKPR from "../../components/customer/pengajuan-kpr/pengajuan-kpr";
+import NotFound from "../../pages/404";
 
 export default function DashboardPetugas(props) {
   const { url } = props.match;
   const navItems = [
     {
-      path: "/",
+      path: "",
       label: "Beranda",
     },
     {

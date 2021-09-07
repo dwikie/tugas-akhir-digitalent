@@ -7,8 +7,8 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import Customer from "../containers/customer";
-import Petugas from "../containers/petugas";
+import Customer from "../containers/dashboard/dashboard-customer";
+import Petugas from "../containers/dashboard/dashboard-petugas";
 import NotFound from "./404";
 
 export default function Dashboard(props) {
