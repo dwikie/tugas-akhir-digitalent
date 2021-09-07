@@ -1,11 +1,11 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Beranda from "../components/petugas/beranda";
-import DashboardHeader from "../components/dashboard-header";
-import DetailPengajuan from "../components/petugas/detail-pengajuan";
-import ListPengajuan from "../components/petugas/list-pengajuan";
-import NotFound from "../pages/404";
+import Beranda from "../../components/customer/beranda";
+import DashboardHeader from "../../components/dashboard-header";
+import DokumenTambahan from "../../components/customer/dokumen-tambahan";
+import PengajuanKPR from "../../components/customer/pengajuan-kpr/pengajuan-kpr";
+import NotFound from "../../pages/404";
 
 export default function DashboardPetugas(props) {
   const { url } = props.match;
@@ -15,8 +15,8 @@ export default function DashboardPetugas(props) {
       label: "Beranda",
     },
     {
-      path: "/pengajuan",
-      label: "List Pengajuan",
+      path: "/buat-pengajuan",
+      label: "Buat Pengajuan",
     },
   ];
   return (
@@ -24,17 +24,17 @@ export default function DashboardPetugas(props) {
       <DashboardHeader
         {...props}
         navItems={navItems}
-        brand="Dashboard Petugas"
+        brand="Dashboard Customer"
       />
       <main className="py-3">
         <Container>
           <Switch>
             <Route exact path={`${url}/`} component={Beranda} />
-            <Route exact path={`${url}/pengajuan`} component={ListPengajuan} />
+            <Route path={`${url}/buat-pengajuan`} component={PengajuanKPR} />
             <Route
               exact
-              path={`${url}/pengajuan/:id`}
-              component={DetailPengajuan}
+              path={`${url}/dokumen-tambahan`}
+              component={DokumenTambahan}
             />
             <Route component={NotFound} />
           </Switch>
