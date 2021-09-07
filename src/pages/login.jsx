@@ -1,31 +1,42 @@
-import React from "react";
-import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
-import FormLogin from "../components/login/form-login";
-import { FaRegQuestionCircle } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Card, Typography } from "antd";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import FormLogin from "./../components/login/form-login";
 
-export default function Login(props) {
+const { Title } = Typography;
+
+export default function Login() {
+  const breakPoint = useBreakpoint();
+  const [cardBorder, setCardBorder] = useState(true);
+  const [cardShadow, setCardShadow] = useState(true);
+
+  useEffect(() => {
+    setCardBorder(breakPoint.xs ? false : true);
+    setCardShadow(breakPoint.xs ? false : true);
+  }, [breakPoint]);
+
   return (
-    <main className="d-flex vh-100">
-      <Card
-        body
-        className="m-auto col-10 col-md-6 col-lg-5 col-xl-4 col-xxl-3 py-2"
+    <main>
+      <Row
+        justify="center"
+        align="middle"
+        gutter={0}
+        style={{ minHeight: "100vh" }}
       >
-        <OverlayTrigger
-          placement="left"
-          overlay={
-            <Tooltip id={`tooltip-info`} className="p-2">
-              Username: any <br />
-              Password: any
-            </Tooltip>
-          }
-        >
-          <Button className="btn d-flex align-items-center ms-auto bg-transparent text-dark border-0">
-            <FaRegQuestionCircle />
-          </Button>
-        </OverlayTrigger>
-        <h1 className="text-center mb-4">Home Loans</h1>
-        <FormLogin {...props} />
-      </Card>
+        <Col xs={24} sm={20} md={12} lg={10} xl={8} xxl={6}>
+          <Card
+            bordered={cardBorder}
+            style={{
+              boxShadow: cardShadow ? "2px 2px 10px 1px #33333315" : "none",
+            }}
+          >
+            <Title level={3} style={{ textAlign: "center" }}>
+              Home Loans A
+            </Title>
+            <FormLogin />
+          </Card>
+        </Col>
+      </Row>
     </main>
   );
 }

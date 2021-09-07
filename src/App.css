@@ -1,1 +1,10 @@
 @import url('./../node_modules/bootstrap/dist/css/bootstrap.min.css');
+@import '~antd/dist/antd.css';
+
+.ant-form-item-with-help {
+    margin-bottom: .75rem;
+}
+
+.ant-btn-loading-icon {
+    display: flex !important;
+}

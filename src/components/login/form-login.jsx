@@ -1,70 +1,81 @@
 import React, { useState } from "react";
-import { Button, Form, Spinner } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { Row, Form, Input, Button, Typography } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { authenticate } from "../../configs/auth";
 
-export default function FormLogin(props) {
-  const [validated, setValidated] = useState(false);
-  const [request, setRequest] = useState(false);
+const { Text, Link } = Typography;
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setValidated(true);
-    setRequest(true);
+export default function FormLogin() {
+  const { replace } = useHistory();
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [form] = Form.useForm();
 
-    const form = e.currentTarget;
-    const username = e.target.querySelector("[name=username]").value;
-    const password = e.target.querySelector("[name=password]").value;
-
-    if (form.checkValidity() === true) {
-      try {
-        await authenticate({ username, password });
-        props.history.push("/dashboard");
-      } catch (err) {
-        setRequest(false);
-        console.error(err);
-      }
-    } else setRequest(false);
-  }
+  const handleOnFinish = async (value) => {
+    try {
+      setLoginLoading(true);
+      await authenticate(value);
+      replace("/dashboard");
+    } catch (err) {
+      setLoginLoading(false);
+      throw new Error(err);
+    }
+  };
 
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      <Form.Group className="mb-2">
-        <Form.Label>Username</Form.Label>
-        <Form.Control
+    <>
+      <Form
+        id="login-form"
+        style={{ margin: "2.75rem 0" }}
+        form={form}
+        onFinish={handleOnFinish}
+      >
+        <Form.Item
           name="username"
-          type="text"
-          placeholder="Masukan Username"
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Mohon masukan username
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-2">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          name="password"
-          type="password"
-          placeholder="Masukan Password"
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Mohon masukan password
-        </Form.Control.Feedback>
-      </Form.Group>
-      <div className="d-flex justify-content-end">
-        <Button type="submit" className="mt-3" disabled={request}>
-          Login
-          <Spinner
-            className={`ms-2 ${request ? "" : "visually-hidden"}`}
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
+          rules={[
+            {
+              required: true,
+              message: "Mohon masukkan username",
+            },
+          ]}
+        >
+          <Input
+            prefix={<UserOutlined style={{ marginRight: "8px" }} />}
+            placeholder="Username"
           />
-        </Button>
-      </div>
-    </Form>
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Mohon masukkan password",
+            },
+          ]}
+        >
+          <Input.Password
+            prefix={<LockOutlined style={{ marginRight: "8px" }} />}
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Row justify="space-between">
+          <Button type="link" style={{ padding: 0 }}>
+            <strong>Lupa Password</strong>
+          </Button>
+          <Button
+            type="primary"
+            loading={loginLoading}
+            htmlType="submit"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <strong>Login</strong>
+          </Button>
+        </Row>
+      </Form>
+      <Text type="secondary">
+        Belum punya akun ? daftar <Link underline>disini</Link>
+      </Text>
+    </>
   );
 }

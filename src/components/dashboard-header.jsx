@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function DashboardHeader(props) {
   const { url } = props.match;
   return (
-    <header>
+    <header className="mb-3">
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Brand>{props.brand}</Navbar.Brand>
