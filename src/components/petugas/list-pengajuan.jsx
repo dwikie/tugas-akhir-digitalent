@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Table,
-  Button,
-  Form,
-  Row,
-  Col,
-  InputGroup,
-  FormControl,
-} from "react-bootstrap";
+import { Table, Button, Form, Input, Row, Col } from "antd";
 import { AiTwotonePrinter, AiOutlineSearch } from "react-icons/ai";
 
 // Data Pengajuan KPR
@@ -51,73 +43,82 @@ const datas = [
 ];
 
 export default function ListPengajuan(props) {
+  const [form] = Form.useForm();
   const { url } = props.match;
   function handleActionEditButton(id) {
     props.history.push(`${url}/${id}`);
   }
+
+  const columns = [
+    {
+      title: "No.",
+      dataIndex: "no",
+      key: "no",
+      render: (text, row, index) => index + 1,
+    },
+    {
+      title: "Tanggal Pengajuan",
+      dataIndex: "tanggalPengajuan",
+      key: "tanggalPengajuan",
+    },
+    {
+      title: "Nama",
+      dataIndex: "nama",
+      key: "nama",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "Rekomendasi",
+      dataIndex: "rekomendasi",
+      key: "rekomendasi",
+    },
+    {
+      title: "Aksi",
+      dataIndex: "aksi",
+      key: "aksi",
+      render: (text, row, index) => {
+        return (
+          <Button onClick={() => handleActionEditButton(index)}>Link</Button>
+        );
+      },
+    },
+  ];
 
   return (
     <div>
       <h3 className="text-center mb-4">Daftar Pengajuan KPR</h3>
 
       {/* Searh Form and Button Download Laporan */}
-      <div>
-        <Form className="my-3">
-          <Row className="justify-content-between">
-            {/* Search Form */}
-            <Col xs="auto">
-              <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
-                Search
-              </Form.Label>
-              <InputGroup className="mb-2">
-                <InputGroup.Text>
-                  <AiOutlineSearch />
-                </InputGroup.Text>
-                <FormControl id="inlineFormInputGroup" placeholder="Search" />
-              </InputGroup>
-            </Col>
-            {/* Button Download Laporan */}
-            <Col xs="auto">
-              <Button variant="warning">
-                Download Laporan <AiTwotonePrinter />
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </div>
+      <Row justify="space-between">
+        <Col md={8} sm={8} xs={12}>
+          <Form form={form}>
+            <Form.Item
+              name="search"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input
+                prefix={<AiOutlineSearch className="site-form-item-icon" />}
+                placeholder="Search"
+              />
+            </Form.Item>
+          </Form>
+        </Col>
+        <Col md={8} sm={8} xs={12}>
+          <Button block>
+            Download Laporan <AiTwotonePrinter />
+          </Button>
+        </Col>
+      </Row>
 
-      {/* Table Pengajuan KPR */}
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Tanggal Pengajuan</th>
-            <th>Nama</th>
-            <th>Status</th>
-            <th>Rekomendasi</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {datas.map((data, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{data.tanggalPengajuan}</td>
-              <td>{data.nama}</td>
-              <td>{data.status}</td>
-              <td>{data.rekomendasi}</td>
-              <td>
-                <Button
-                  variant="link"
-                  onClick={() => handleActionEditButton(index)}
-                >
-                  Link
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <Table columns={columns} dataSource={datas} />
     </div>
   );
 }
