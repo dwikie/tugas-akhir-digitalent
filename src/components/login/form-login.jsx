@@ -2,22 +2,26 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Row, Form, Input, Button, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { authenticate } from "../../configs/auth";
+import { Authenticate } from "../../configs/authenticate";
+import useAccount from "../../hooks/useAccount";
+import Checkbox from "antd/lib/checkbox/Checkbox";
 
 const { Text, Link } = Typography;
 
 export default function FormLogin() {
-  const { replace } = useHistory();
-  const [loginLoading, setLoginLoading] = useState(false);
+  const history = useHistory();
+  const [loggingIn, setloggingIn] = useState(false);
   const [form] = Form.useForm();
+  const [, setAccount] = useAccount();
 
   const handleOnFinish = async (value) => {
     try {
-      setLoginLoading(true);
-      await authenticate(value);
-      replace("/dashboard");
+      setloggingIn(true);
+      await Authenticate(value);
+      setAccount({ ...value, isLoggedIn: true });
+      history.replace("/dashboard");
     } catch (err) {
-      setLoginLoading(false);
+      setloggingIn(false);
       throw new Error(err);
     }
   };
@@ -59,13 +63,22 @@ export default function FormLogin() {
             placeholder="Password"
           />
         </Form.Item>
+
+        <Form.Item
+          name="isPetugas"
+          valuePropName="checked"
+          initialValue={false}
+        >
+          <Checkbox>Petugas</Checkbox>
+        </Form.Item>
+
         <Row justify="space-between">
           <Button type="link" style={{ padding: 0 }}>
             <strong>Lupa Password</strong>
           </Button>
           <Button
             type="primary"
-            loading={loginLoading}
+            loading={loggingIn}
             htmlType="submit"
             style={{ display: "flex", alignItems: "center" }}
           >

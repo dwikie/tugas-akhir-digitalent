@@ -1,4 +1,4 @@
-@import url('./../node_modules/bootstrap/dist/css/bootstrap.min.css');
+@import 'bootstrap/dist/css/bootstrap.min.css';
 @import '~antd/dist/antd.css';
 
 .ant-form-item-with-help {
@@ -7,4 +7,20 @@
 
 .ant-btn-loading-icon {
     display: flex !important;
+}
+
+.bg-white {
+    background-color: #FFFFFF;
+}
+
+.bg-dark {
+    background-color: #333333;
+}
+
+.bg-transparent {
+    background-color: transparent;
+}
+
+.shadow { 
+    box-shadow: 2px 2px 10px 1px #33333315 !important;
 }
