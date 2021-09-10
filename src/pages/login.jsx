@@ -11,8 +11,8 @@ export default function Login() {
   const [cardShadow, setCardShadow] = useState(true);
 
   useEffect(() => {
-    setCardBorder(breakPoint.xs ? false : true);
-    setCardShadow(breakPoint.xs ? false : true);
+    setCardBorder(!breakPoint.xs);
+    setCardShadow(!breakPoint.xs);
   }, [breakPoint]);
 
   return (
