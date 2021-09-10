@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Layout, Menu } from "antd";
+import useDashboard from "../hooks/useDashboard";
 
 const { Sider } = Layout;
 
 export default function Sidebar(props) {
   const siderItems = props.siderItems;
-  const [isCollapsed] = props.siderCollapsed;
+  const { sidebar } = useDashboard();
   const [collapsedWidth, setCollapsedWidth] = useState(80);
   const history = useHistory();
 
@@ -15,7 +16,7 @@ export default function Sidebar(props) {
       theme="light"
       trigger={null}
       collapsible
-      collapsed={isCollapsed}
+      collapsed={sidebar.isCollapsed}
       breakpoint="md"
       collapsedWidth={collapsedWidth}
       onBreakpoint={(breakpoint) =>

@@ -12,7 +12,7 @@ import DokumenTambahan from "../../components/customer/dokumen-tambahan";
 import PengajuanKPR from "../../components/customer/pengajuan-kpr/pengajuan-kpr";
 import NotFound from "../../pages/404";
 import Beranda from "../../components/customer/beranda";
-import { FileSearchOutlined, HomeOutlined } from "@ant-design/icons";
+import { FormOutlined, HomeOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -27,7 +27,7 @@ export default function DashboardCustomer(props) {
     },
     {
       label: "Buat Pengajuan",
-      icon: FileSearchOutlined,
+      icon: FormOutlined,
       to: `${url}/buat-pengajuan`,
     },
   ];

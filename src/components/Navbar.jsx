@@ -5,25 +5,31 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Layout, Row, Dropdown, Menu } from "antd";
+import {
+  Button,
+  Col,
+  Layout,
+  Row,
+  Dropdown,
+  Menu,
+  Typography,
+  Space,
+} from "antd";
 import Avatar from "antd/lib/avatar/avatar";
+import useDashboard from "../hooks/useDashboard";
 
 const { Header } = Layout;
 
-export default function Navbar(props) {
-  const [isCollapsed, setIsCollapsed] = props.siderCollapsed;
+export default function Navbar() {
+  const { logout, setSidebar, sidebar } = useDashboard();
 
   function handleCollapsed() {
-    setIsCollapsed(!isCollapsed);
+    setSidebar({ ...sidebar, isCollapsed: !sidebar.isCollapsed });
   }
 
   const menu = (
     <Menu>
-      <Menu.Item
-        onClick={props.handleLogout}
-        key="logout"
-        icon={<LogoutOutlined />}
-      >
+      <Menu.Item onClick={logout} key="logout" icon={<LogoutOutlined />}>
         Logout
       </Menu.Item>
     </Menu>
@@ -40,15 +46,24 @@ export default function Navbar(props) {
         style={{ flex: 1, padding: "0 1.25rem" }}
       >
         <Col>
-          <Button
-            onClick={handleCollapsed}
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          </Button>
+          <Space size={18}>
+            <Button
+              onClick={handleCollapsed}
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {sidebar.isCollapsed ? (
+                <MenuUnfoldOutlined />
+              ) : (
+                <MenuFoldOutlined />
+              )}
+            </Button>
+            <Typography.Title level={4} style={{ margin: 0 }}>
+              Home Loans A
+            </Typography.Title>
+          </Space>
         </Col>
         <Col>
           <Dropdown overlay={menu}>
