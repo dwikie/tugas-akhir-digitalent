@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, Form, Input, Row, Col } from "antd";
+import { Table, Button, Form, Input, Row, Col, Typography } from "antd";
 import { AiTwotonePrinter, AiOutlineSearch } from "react-icons/ai";
 
 // Data Pengajuan KPR
@@ -82,15 +82,22 @@ export default function ListPengajuan(props) {
       key: "aksi",
       render: (text, row, index) => {
         return (
-          <Button onClick={() => handleActionEditButton(index)}>Link</Button>
+          <Button onClick={() => handleActionEditButton(index)}>
+            Lihat Detail
+          </Button>
         );
       },
     },
   ];
 
   return (
-    <div>
-      <h3 className="text-center mb-4">Daftar Pengajuan KPR</h3>
+    <>
+      <Typography.Title
+        level={3}
+        style={{ textAlign: "center", margin: "20px 0" }}
+      >
+        Daftar Pengajuan KPR
+      </Typography.Title>
 
       {/* Searh Form and Button Download Laporan */}
       <Row justify="space-between">
@@ -113,12 +120,12 @@ export default function ListPengajuan(props) {
         </Col>
         <Col md={8} sm={8} xs={12}>
           <Button block>
-            Download Laporan <AiTwotonePrinter />
+            Download Laporan &nbsp; <AiTwotonePrinter size="1.5em" />
           </Button>
         </Col>
       </Row>
 
       <Table columns={columns} dataSource={datas} />
-    </div>
+    </>
   );
 }
