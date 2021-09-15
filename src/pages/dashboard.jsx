@@ -1,57 +1,63 @@
+import { FileSearchOutlined, HomeOutlined } from "@ant-design/icons";
 import React from "react";
-import { Nav } from "react-bootstrap";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Switch,
-  Redirect,
+  useRouteMatch,
 } from "react-router-dom";
-import Customer from "../containers/dashboard/dashboard-customer";
-import Petugas from "../containers/dashboard/dashboard-petugas";
-import NotFound from "./404";
+import BerandaCustomer from "../components/customer/beranda";
+import DokumenTambahan from "../components/customer/dokumen-tambahan";
+import PengajuanKPR from "../components/customer/pengajuan-kpr/pengajuan-kpr";
+import DashboardContainer from "../containers/DashboardContainer";
+import DashboardProvider from "../context/DashboardContext";
+import useAccount from "../hooks/useAccount";
+import xx, { DashboardPetugasRoutes } from "../routes/DashboardRoutes.js";
 
-export default function Dashboard(props) {
-  const { url } = props.match;
-  const handleLogout = () => {
-    props.history.push("/logout");
-  };
+export default function Dashboard() {
+  const [account] = useAccount();
+  const { url } = useRouteMatch();
+  console.log(<xx />);
+
+  const DashboardCustomerRoutes = [
+    {
+      path: `${url}`,
+      exact: true,
+      component: BerandaCustomer,
+      sidebarNav: {
+        icon: HomeOutlined,
+        label: "Beranda",
+      },
+    },
+    {
+      path: `${url}/buat-pengajuan`,
+      exact: true,
+      component: PengajuanKPR,
+      sidebarNav: {
+        icon: FileSearchOutlined,
+        label: "Buat Pengajuan",
+      },
+    },
+    {
+      path: `${url}/dokumen-tambahan`,
+      exact: true,
+      component: DokumenTambahan,
+    },
+  ];
+
   return (
-    <Router>
-      {/* Development Purpose */}
-      <Nav variant="tabs" defaultActiveKey={`${url}/customer`}>
-        <Nav.Item>
-          <Link
-            className="nav-link"
-            style={{ marginRight: "1rem" }}
-            to={`${url}/customer`}
-          >
-            Dashboard Customer
-          </Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Link className="nav-link" to={`${url}/petugas`}>
-            Dashboard Petugas
-          </Link>
-        </Nav.Item>
-      </Nav>
-
-      <Switch>
+    <DashboardProvider>
+      <Router>
         <Route
-          path={`${url}/customer`}
-          component={(x) => <Customer {...x} handleLogOut={handleLogout} />}
+          path={url}
+          render={() =>
+            account.isPetugas ? (
+              <DashboardContainer routes={DashboardPetugasRoutes} />
+            ) : (
+              <DashboardContainer routes={DashboardCustomerRoutes} />
+            )
+          }
         />
-
-        <Route
-          path={`${url}/petugas`}
-          component={(x) => <Petugas {...x} handleLogOut={handleLogout} />}
-        />
-
-        <Route path={`${url}`}>
-          <Redirect to={`${url}/customer`} />
-        </Route>
-        <Route component={NotFound} />
-      </Switch>
-    </Router>
+      </Router>
+    </DashboardProvider>
   );
 }

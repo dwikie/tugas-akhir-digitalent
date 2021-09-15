@@ -67,7 +67,7 @@ export default function DisplayPengajuanKPR(props) {
             </label>
             <Button onClick={handleGoToDokumenTambahan}>
               {" "}
-              Menunggu Verifikasi{" "}
+              Pengajuan telah terverifikasi, silahkan isi kelengkapan dokumen{" "}
             </Button>
           </tr>
         </div>
