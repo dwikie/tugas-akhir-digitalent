@@ -7,6 +7,10 @@ export default function SidebarSider({ menuItems, isVisible }) {
   const history = useHistory();
   const { pathname } = useLocation();
 
+  useEffect(() => {
+    return () => null;
+  }, []);
+
   return (
     <Layout.Sider
       theme="light"
