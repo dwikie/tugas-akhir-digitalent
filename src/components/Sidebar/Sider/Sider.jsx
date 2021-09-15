@@ -1,43 +1,46 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router";
 import { Layout, Menu } from "antd";
-import useDashboard from "../hooks/useDashboard";
 
-const { Sider } = Layout;
-
-export default function Sidebar(props) {
-  const siderItems = props.siderItems;
-  const { sidebar } = useDashboard();
+export default function SidebarSider({ menuItems, isVisible }) {
   const [collapsedWidth, setCollapsedWidth] = useState(80);
   const history = useHistory();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    return () => null;
+  }, []);
 
   return (
-    <Sider
+    <Layout.Sider
       theme="light"
       trigger={null}
       collapsible
-      collapsed={sidebar.isCollapsed}
-      breakpoint="md"
+      collapsed={isVisible}
+      breakpoint={"xl"}
       collapsedWidth={collapsedWidth}
       onBreakpoint={(breakpoint) =>
         breakpoint ? setCollapsedWidth(0) : setCollapsedWidth(80)
       }
       style={{ zIndex: 1 }}
     >
-      <Menu theme="light" mode="inline" defaultSelectedKeys={["Beranda"]}>
-        {Array.from(siderItems).map((item) => {
+      <Menu theme="light" mode="inline" selectedKeys={[pathname]}>
+        {Array.from(menuItems).map((item) => {
           return (
             <Menu.Item
-              key={item.label}
+              key={item.to}
               icon={<item.icon style={{ display: "flex" }} />}
               style={{ display: "flex", alignItems: "center" }}
-              onClick={() => history.push(item.to)}
+              onClick={(e) => {
+                if (e.key === pathname) return;
+                history.push(item.to);
+              }}
             >
               {item.label}
             </Menu.Item>
           );
         })}
       </Menu>
-    </Sider>
+    </Layout.Sider>
   );
 }

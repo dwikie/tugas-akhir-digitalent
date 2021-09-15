@@ -1,5 +1,5 @@
 import React from "react";
-import { IsAuthenticated } from "../configs/authenticate";
+import { IsAuthenticated } from "../configs/authentication";
 
 export const AccountContext = React.createContext();
 

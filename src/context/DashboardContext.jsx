@@ -1,12 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { DeAuthenticate, IsAuthenticated } from "../configs/authenticate";
+import { DeAuthenticate, IsAuthenticated } from "../configs/authentication";
 
 export const DashboardContext = React.createContext();
 
 export default function DashboardProvider(props) {
   const { replace } = useHistory();
-  const [sidebar, setSidebar] = React.useState({ isCollapsed: true });
+  const [sidebar, setSidebar] = React.useState({ isVisible: true });
 
   function removeAuth() {
     DeAuthenticate();
