@@ -1,4 +1,3 @@
-import { FileSearchOutlined, HomeOutlined } from "@ant-design/icons";
 import React from "react";
 import {
   BrowserRouter as Router,
