@@ -13,23 +13,20 @@ export default function Sidebar({ sidebarItems }) {
     setSidebar({ ...sidebar, isVisible: !sidebar.isVisible });
   }
 
+  if (gridBreakpoint.lg) {
+    return (
+      <SidebarSider
+        isVisible={sidebar.isVisible}
+        menuItems={sidebarItems}
+        closeSidebar={closeSidebar}
+      />
+    );
+  }
   return (
-    <>
-      {gridBreakpoint.lg ? (
-        <>
-          <SidebarSider
-            isVisible={sidebar.isVisible}
-            menuItems={sidebarItems}
-            closeSidebar={closeSidebar}
-          />
-        </>
-      ) : (
-        <SidebarDrawer
-          isVisible={sidebar.isVisible}
-          menuItems={sidebarItems}
-          closeSidebar={closeSidebar}
-        />
-      )}
-    </>
+    <SidebarDrawer
+      isVisible={sidebar.isVisible}
+      menuItems={sidebarItems}
+      closeSidebar={closeSidebar}
+    />
   );
 }

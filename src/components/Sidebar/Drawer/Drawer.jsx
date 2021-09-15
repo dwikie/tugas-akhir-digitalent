@@ -6,10 +6,6 @@ export default function SidebarDrawer({ isVisible, closeSidebar, menuItems }) {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    return () => null;
-  }, []);
-
   return (
     <Drawer
       title="Basic Drawer"
