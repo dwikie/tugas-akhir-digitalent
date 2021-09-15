@@ -160,7 +160,7 @@ export default function FormPengajuanKPR() {
         htmlType="submit"
         style={{ display: "flex", alignItems: "center" }}
       >
-        <strong>Sumbit Pengajuan KPR</strong>
+        <strong>Submit Pengajuan KPR</strong>
       </Button>
     </>
   );
