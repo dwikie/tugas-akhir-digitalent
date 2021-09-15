@@ -17,7 +17,8 @@ export default function FormLogin() {
   const handleOnFinish = async (value) => {
     try {
       setloggingIn(true);
-      await Authenticate(value);
+      const result = await Authenticate(value);
+      console.log(result);
       setAccount({ ...value, isLoggedIn: true });
       history.replace("/dashboard");
     } catch (err) {
