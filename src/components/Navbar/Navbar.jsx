@@ -16,7 +16,7 @@ import {
   Space,
 } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
-import useDashboard from "../hooks/useDashboard";
+import useDashboard from "../../hooks/useDashboard";
 
 const { Header } = Layout;
 
@@ -24,7 +24,7 @@ export default function Navbar() {
   const { logout, setSidebar, sidebar } = useDashboard();
 
   function handleCollapsed() {
-    setSidebar({ ...sidebar, isCollapsed: !sidebar.isCollapsed });
+    setSidebar({ ...sidebar, isVisible: !sidebar.isVisible });
   }
 
   const menu = (
@@ -54,7 +54,7 @@ export default function Navbar() {
                 alignItems: "center",
               }}
             >
-              {sidebar.isCollapsed ? (
+              {sidebar.isVisible ? (
                 <MenuUnfoldOutlined />
               ) : (
                 <MenuFoldOutlined />
@@ -66,7 +66,7 @@ export default function Navbar() {
           </Space>
         </Col>
         <Col>
-          <Dropdown overlay={menu}>
+          <Dropdown overlay={menu} trigger={["click"]}>
             <Avatar
               style={{
                 display: "flex",

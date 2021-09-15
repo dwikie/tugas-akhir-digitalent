@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Row, Form, Input, Button, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Authenticate } from "../../configs/authenticate";
+import { Authenticate } from "../../configs/authentication";
 import useAccount from "../../hooks/useAccount";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 
