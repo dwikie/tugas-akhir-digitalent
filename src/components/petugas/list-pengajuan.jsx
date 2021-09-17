@@ -114,14 +114,21 @@ export default function ListPengajuan(props) {
               <Input
                 prefix={<AiOutlineSearch className="site-form-item-icon" />}
                 placeholder="Search"
+                onInput="search(this.value)"
               />
+              <ul id="result-list"></ul>
+              <script src="download-search.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
             </Form.Item>
           </Form>
         </Col>
         <Col md={8} sm={8} xs={12}>
-          <Button block>
+          <Button onClick="download()">
             Download Laporan &nbsp; <AiTwotonePrinter size="1.5em" />
           </Button>
+          <script src="download-search.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js">
+          </script>
         </Col>
       </Row>
 
