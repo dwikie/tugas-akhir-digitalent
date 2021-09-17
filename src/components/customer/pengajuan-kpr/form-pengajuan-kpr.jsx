@@ -4,7 +4,8 @@ import { UploadOutlined } from "@ant-design/icons";
 export default function FormPengajuanKPR() {
   const [validated, setValidated] = useState(false);
   const [form] = Form.useForm();
-  const normFile = (e: any) => {
+
+  const normFile = (e) => {
     if (Array.isArray(e)) {
       return e;
     }
@@ -19,12 +20,13 @@ export default function FormPengajuanKPR() {
       throw new Error(err);
     }
   };
+
   return (
     <>
       <Form
         id="form-kpr"
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
         layout="horizontal"
         form={form}
         onFinish={handleOnFinish}
@@ -153,15 +155,15 @@ export default function FormPengajuanKPR() {
             </Upload.Dragger>
           </Form.Item>
         </Form.Item>
+        <Button
+          type="primary"
+          loading={validated}
+          htmlType="submit"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <strong>Sumbit Pengajuan KPR</strong>
+        </Button>
       </Form>
-      <Button
-        type="primary"
-        loading={validated}
-        htmlType="submit"
-        style={{ display: "flex", alignItems: "center" }}
-      >
-        <strong>Submit Pengajuan KPR</strong>
-      </Button>
     </>
   );
 }

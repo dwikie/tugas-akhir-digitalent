@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
+
 import { Descriptions,Button,Typography  } from 'antd';
 import FormKelengkapanKPR from "./form-kelengkapan-KPR"
-
 
 
 export default function DetailPengajuan() {
   const { params } = useRouteMatch();
   const { Link } = Typography;
-  return (<div>
+
+
+  return (
+    <div>
     
    <Descriptions title="Data Diri Anda" column={1} >
     
@@ -31,6 +34,5 @@ export default function DetailPengajuan() {
   <FormKelengkapanKPR></FormKelengkapanKPR>
   
   </div>);
-  // <div>Detail Pengajuan {params.id}</div>;
  
 }
