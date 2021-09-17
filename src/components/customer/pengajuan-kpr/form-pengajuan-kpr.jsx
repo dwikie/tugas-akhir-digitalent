@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
+import { FormPengajuan } from "../../../configs/formpengajuan";
 import { UploadOutlined } from "@ant-design/icons";
 export default function FormPengajuanKPR() {
   const [validated, setValidated] = useState(false);
   const [form] = Form.useForm();
-  const normFile = (e: any) => {
+
+  const normFile = (e) => {
     if (Array.isArray(e)) {
       return e;
     }
@@ -14,17 +16,20 @@ export default function FormPengajuanKPR() {
   const handleOnFinish = async (value) => {
     try {
       setValidated(true);
+      const result = await FormPengajuan(value);
+      console.log(result);
     } catch (err) {
       setValidated(false);
       throw new Error(err);
     }
   };
+
   return (
     <>
       <Form
         id="form-kpr"
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
         layout="horizontal"
         form={form}
         onFinish={handleOnFinish}
@@ -42,7 +47,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="nama"
+          name="nama_lengkap"
           label="Nama Lengkap"
           rules={[
             {
@@ -54,7 +59,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="TL"
+          name="tempat_lahir"
           label="Tempat Lahir"
           rules={[
             {
@@ -66,7 +71,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="tanggal"
+          name="tanggal_lahir"
           label="Tanggal Lahir"
           rules={[
             {
@@ -90,7 +95,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="pendapatan"
+          name="pendapatan_perbulan"
           label="Pendapatan Perbulan"
           rules={[
             {
@@ -102,11 +107,11 @@ export default function FormPengajuanKPR() {
           <InputNumber />
         </Form.Item>
         <Form.Item
-          name="bukti_selfie"
+          name="bukti_ktp"
           label="Bukti Selfie KTP"
           rules={[
             {
-              required: true,
+             // required: true,
               message: "Mohon masukkan Bukti Selfie KTP",
             },
           ]}
@@ -132,7 +137,7 @@ export default function FormPengajuanKPR() {
           label="Bukti Slip Gaji Suami dan/atau istri"
           rules={[
             {
-              required: true,
+             // required: true,
               message: "Mohon masukkan Bukti Gaji Suami dan/atau istri",
             },
           ]}
@@ -153,8 +158,7 @@ export default function FormPengajuanKPR() {
             </Upload.Dragger>
           </Form.Item>
         </Form.Item>
-      </Form>
-      <Button
+        <Button
         type="primary"
         loading={validated}
         htmlType="submit"
@@ -162,6 +166,7 @@ export default function FormPengajuanKPR() {
       >
         <strong>Submit Pengajuan KPR</strong>
       </Button>
+      </Form>
     </>
   );
 }
