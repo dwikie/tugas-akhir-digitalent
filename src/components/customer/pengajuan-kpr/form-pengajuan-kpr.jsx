@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
+import { FormPengajuan } from "../../../configs/formpengajuan";
 import { UploadOutlined } from "@ant-design/icons";
 export default function FormPengajuanKPR() {
   const [validated, setValidated] = useState(false);
@@ -15,6 +16,8 @@ export default function FormPengajuanKPR() {
   const handleOnFinish = async (value) => {
     try {
       setValidated(true);
+      const result = await FormPengajuan(value);
+      console.log(result);
     } catch (err) {
       setValidated(false);
       throw new Error(err);
@@ -44,7 +47,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="nama"
+          name="nama_lengkap"
           label="Nama Lengkap"
           rules={[
             {
@@ -56,7 +59,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="TL"
+          name="tempat_lahir"
           label="Tempat Lahir"
           rules={[
             {
@@ -68,7 +71,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="tanggal"
+          name="tanggal_lahir"
           label="Tanggal Lahir"
           rules={[
             {
@@ -92,7 +95,7 @@ export default function FormPengajuanKPR() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="pendapatan"
+          name="pendapatan_perbulan"
           label="Pendapatan Perbulan"
           rules={[
             {
@@ -104,11 +107,11 @@ export default function FormPengajuanKPR() {
           <InputNumber />
         </Form.Item>
         <Form.Item
-          name="bukti_selfie"
+          name="bukti_ktp"
           label="Bukti Selfie KTP"
           rules={[
             {
-              required: true,
+             // required: true,
               message: "Mohon masukkan Bukti Selfie KTP",
             },
           ]}
@@ -134,7 +137,7 @@ export default function FormPengajuanKPR() {
           label="Bukti Slip Gaji Suami dan/atau istri"
           rules={[
             {
-              required: true,
+             // required: true,
               message: "Mohon masukkan Bukti Gaji Suami dan/atau istri",
             },
           ]}
@@ -156,13 +159,13 @@ export default function FormPengajuanKPR() {
           </Form.Item>
         </Form.Item>
         <Button
-          type="primary"
-          loading={validated}
-          htmlType="submit"
-          style={{ display: "flex", alignItems: "center" }}
-        >
-          <strong>Sumbit Pengajuan KPR</strong>
-        </Button>
+        type="primary"
+        loading={validated}
+        htmlType="submit"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <strong>Submit Pengajuan KPR</strong>
+      </Button>
       </Form>
     </>
   );
