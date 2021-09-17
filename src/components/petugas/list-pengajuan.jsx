@@ -51,6 +51,24 @@ export default function ListPengajuan(props) {
         .then((res) => {
           let { data } = res;
           let allData = typeof data === "string" ? JSON.parse(data) : data;
+          allData.data.map((data) => {
+            switch (data.status) {
+              case 1:
+                data.status = "Menunggu Konfirmasi";
+                return data;
+              case 2:
+                data.status = "Ditolak";
+                return data;
+              case 3:
+                data.status = "Disetujui";
+                return data;
+              case 4:
+                data.status = "Selesai";
+                return data;
+              default:
+                break;
+            }
+          });
           setIsData(allData.data);
           setIsLoading(false);
         })

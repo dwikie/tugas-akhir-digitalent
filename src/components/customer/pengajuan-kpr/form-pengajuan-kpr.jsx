@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  InputNumber,
+  Upload,
+  message,
+} from "antd";
 import { FormPengajuan } from "../../../configs/formpengajuan";
 import { UploadOutlined } from "@ant-design/icons";
 export default function FormPengajuanKPR() {
@@ -13,11 +21,16 @@ export default function FormPengajuanKPR() {
     return e && e.fileList;
   };
 
+  // const handleUploadSelfieKTP = async (files) => {
+  //   console.log(files);
+  // };
+
   const handleOnFinish = async (value) => {
+    setValidated(true);
     try {
-      setValidated(true);
-      const result = await FormPengajuan(value);
-      console.log(result);
+      await FormPengajuan(value);
+      message.success("Berhasil membuat pengajuan", 3);
+      setValidated(false);
     } catch (err) {
       setValidated(false);
       throw new Error(err);
@@ -111,7 +124,7 @@ export default function FormPengajuanKPR() {
           label="Bukti Selfie KTP"
           rules={[
             {
-             // required: true,
+              // required: true,
               message: "Mohon masukkan Bukti Selfie KTP",
             },
           ]}
@@ -122,7 +135,10 @@ export default function FormPengajuanKPR() {
             getValueFromEvent={normFile}
             noStyle
           >
-            <Upload.Dragger name="files" action="/upload.do">
+            <Upload.Dragger
+              name="selfie-ktp"
+              action={`${process.env.REACT_APP_API_URL}upload/selfie_ktp`}
+            >
               <p className="ant-upload-drag-icon">
                 <UploadOutlined />
               </p>
@@ -137,7 +153,7 @@ export default function FormPengajuanKPR() {
           label="Bukti Slip Gaji Suami dan/atau istri"
           rules={[
             {
-             // required: true,
+              // required: true,
               message: "Mohon masukkan Bukti Gaji Suami dan/atau istri",
             },
           ]}
@@ -148,7 +164,10 @@ export default function FormPengajuanKPR() {
             getValueFromEvent={normFile}
             noStyle
           >
-            <Upload.Dragger name="files" action="/upload.do">
+            <Upload.Dragger
+              name="files"
+              action={`${process.env.REACT_APP_API_URL}upload/slip_gaji`}
+            >
               <p className="ant-upload-drag-icon">
                 <UploadOutlined />
               </p>
@@ -159,13 +178,13 @@ export default function FormPengajuanKPR() {
           </Form.Item>
         </Form.Item>
         <Button
-        type="primary"
-        loading={validated}
-        htmlType="submit"
-        style={{ display: "flex", alignItems: "center" }}
-      >
-        <strong>Submit Pengajuan KPR</strong>
-      </Button>
+          type="primary"
+          loading={validated}
+          htmlType="submit"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <strong>Submit Pengajuan KPR</strong>
+        </Button>
       </Form>
     </>
   );
