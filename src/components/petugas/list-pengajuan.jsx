@@ -1,94 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button, Form, Input, Row, Col, Typography } from "antd";
 import { AiTwotonePrinter, AiOutlineSearch } from "react-icons/ai";
+import { httpAuth } from "../../configs/axios-instances";
 
-// Data Pengajuan KPR
-const datas = [
+const columns = [
   {
-    tanggalPengajuan: "08 Juli 2021 10.00 WIB",
-    nama: "Asep Sunandar",
-    status: "Menunggu Persetujuan",
-    rekomendasi: "Tidak",
+    title: "No.",
+    dataIndex: "no",
+    key: "no",
+    render: (text, row, index) => index + 1,
   },
   {
-    tanggalPengajuan: "05 Juli 2021 13.00 WIB",
-    nama: "Budi Rangga",
-    status: "Disetujui",
-    rekomendasi: "Setujui",
+    title: "Tanggal Pengajuan",
+    dataIndex: "tanggalPengajuan",
+    key: "tanggalPengajuan",
+    render: () => "Senin, 23 Agustus",
   },
   {
-    tanggalPengajuan: "18 Juni 2021 14.00 WIB",
-    nama: "Gayus Tambunan",
-    status: "Ditolak",
-    rekomendasi: "Tidak",
+    title: "Nama",
+    dataIndex: "nama_lengkap",
+    key: "nama",
   },
   {
-    tanggalPengajuan: "10 Juni 2021 21.00 WIB",
-    nama: "Nia Kurniasih",
-    status: "Menunggu Verifikasi",
-    rekomendasi: "-",
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
   },
   {
-    tanggalPengajuan: "10 Juni 2021 20.00 WIB",
-    nama: "Jaja Sukaraja",
-    status: "Terverifikasi",
-    rekomendasi: "-",
-  },
-  {
-    tanggalPengajuan: "09 Juni 2021 20.00 WIB",
-    nama: "Koswara",
-    status: "Tidak Terverifikasi",
-    rekomendasi: "-",
+    title: "Rekomendasi",
+    dataIndex: "rekomendasi",
+    key: "rekomendasi",
+    render: () => "Iya",
   },
 ];
 
 export default function ListPengajuan(props) {
   const [form] = Form.useForm();
   const { url } = props.match;
+  const [isData, setIsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   function handleActionEditButton(id) {
     props.history.push(`${url}/${id}`);
   }
 
-  const columns = [
-    {
-      title: "No.",
-      dataIndex: "no",
-      key: "no",
-      render: (text, row, index) => index + 1,
-    },
-    {
-      title: "Tanggal Pengajuan",
-      dataIndex: "tanggalPengajuan",
-      key: "tanggalPengajuan",
-    },
-    {
-      title: "Nama",
-      dataIndex: "nama",
-      key: "nama",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
-    {
-      title: "Rekomendasi",
-      dataIndex: "rekomendasi",
-      key: "rekomendasi",
-    },
-    {
-      title: "Aksi",
-      dataIndex: "aksi",
-      key: "aksi",
-      render: (text, row, index) => {
-        return (
-          <Button onClick={() => handleActionEditButton(index)}>
-            Lihat Detail
-          </Button>
-        );
-      },
-    },
-  ];
+  useEffect(() => {
+    const fetchData = () => {
+      return httpAuth
+        .get("list_pengajuan")
+        .then((res) => {
+          let { data } = res;
+          let allData = typeof data === "string" ? JSON.parse(data) : data;
+          setIsData(allData.data);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -125,7 +94,20 @@ export default function ListPengajuan(props) {
         </Col>
       </Row>
 
-      <Table columns={columns} dataSource={datas} />
+      <Table
+        dataSource={isData}
+        rowKey={(record) => record.id_pengajuan}
+        loading={isLoading}
+        columns={columns}
+        onRow={(record) => {
+          return {
+            onClick: () => handleActionEditButton(record.id_pengajuan),
+            style: {
+              cursor: "pointer",
+            },
+          };
+        }}
+      />
     </>
   );
 }
