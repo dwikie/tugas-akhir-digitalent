@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Form, Input, Row, Col, Typography } from "antd";
-import { AiTwotonePrinter, AiOutlineSearch } from "react-icons/ai";
+import { PrinterFilled, SearchOutlined } from "@ant-design/icons";
 import { httpAuth } from "../../configs/axios-instances";
 
 const columns = [
@@ -66,7 +66,7 @@ export default function ListPengajuan(props) {
                 data.status = "Selesai";
                 return data;
               default:
-                break;
+                return data;
             }
           });
           setIsData(allData.data);
@@ -99,7 +99,7 @@ export default function ListPengajuan(props) {
               ]}
             >
               <Input
-                prefix={<AiOutlineSearch className="site-form-item-icon" />}
+                prefix={<SearchOutlined className="site-form-item-icon" />}
                 placeholder="Search"
               />
             </Form.Item>
@@ -107,7 +107,7 @@ export default function ListPengajuan(props) {
         </Col>
         <Col md={8} sm={8} xs={12}>
           <Button block>
-            Download Laporan &nbsp; <AiTwotonePrinter size="1.5em" />
+            Download Laporan &nbsp; <PrinterFilled size="1.5em" />
           </Button>
         </Col>
       </Row>

@@ -27,7 +27,7 @@ export default function AppRoutes() {
         </AuthenticatedRoute>
 
         <Route exact path="/logout" render={() => <Redirect to="/login" />} />
-        <Route exact path="/*" render={() => <Redirect to="/login" />} />
+        <Route exact path="/" render={() => <Redirect to="/login" />} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

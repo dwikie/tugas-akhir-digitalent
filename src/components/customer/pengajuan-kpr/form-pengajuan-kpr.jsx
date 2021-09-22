@@ -28,6 +28,7 @@ export default function FormPengajuanKPR() {
   const handleOnFinish = async (value) => {
     setValidated(true);
     try {
+      console.log(value);
       await FormPengajuan(value);
       message.success("Berhasil membuat pengajuan", 3);
       setValidated(false);

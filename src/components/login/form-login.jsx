@@ -18,7 +18,6 @@ export default function FormLogin() {
     try {
       setloggingIn(true);
       const result = await Authenticate(value);
-      console.log(result);
       setAccount({ ...value, isLoggedIn: true });
       history.replace("/dashboard");
     } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
-import Sidebar from "../components/Sidebar/Sidebar";
-import Navbar from "../components/Navbar/Navbar";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Navbar from "../../components/Navbar/Navbar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const { Content } = Layout;

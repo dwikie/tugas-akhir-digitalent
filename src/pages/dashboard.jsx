@@ -4,13 +4,13 @@ import {
   Route,
   useRouteMatch,
 } from "react-router-dom";
-import DashboardContainer from "../containers/DashboardContainer";
+import DashboardContainer from "../containers/Dashboard/DashboardContainer";
 import DashboardProvider from "../context/DashboardContext";
 import useAccount from "../hooks/useAccount";
 import {
   DashboardPetugasRoutes,
   DashboardCustomerRoutes,
-} from "../routes/DashboardRoutes.js";
+} from "../routes/dashboard.routes.js";
 
 export default function Dashboard() {
   const [account] = useAccount();
