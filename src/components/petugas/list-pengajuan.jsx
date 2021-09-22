@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Form, Input, Row, Col, Typography } from "antd";
+import { Table, Button, Form, Input, Row, Col, Typography, Alert } from "antd";
 import { AiTwotonePrinter, AiOutlineSearch } from "react-icons/ai";
 import { httpAuth } from "../../configs/axios-instances";
 
@@ -25,6 +25,20 @@ const columns = [
     title: "Status",
     dataIndex: "status",
     key: "status",
+    render: (text) => {
+      switch (text) {
+        case 1:
+          return "Menunggu Konfirmasi";
+        case 2:
+          return "Dibatalkan";
+        case 3:
+          return "Disetujui";
+        case 4:
+          return "Selesai";
+        default:
+          return "-";
+      }
+    },
   },
   {
     title: "Rekomendasi",
@@ -39,6 +53,7 @@ export default function ListPengajuan(props) {
   const { url } = props.match;
   const [isData, setIsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState();
 
   function handleActionEditButton(id) {
     props.history.push(`${url}/${id}`);
@@ -54,7 +69,7 @@ export default function ListPengajuan(props) {
           setIsData(allData.data);
           setIsLoading(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => setIsError(err.message));
     };
     fetchData();
   }, []);
@@ -93,6 +108,15 @@ export default function ListPengajuan(props) {
           </Button>
         </Col>
       </Row>
+
+      {isError ? (
+        <Alert
+          message={`Opps! ${isError}`}
+          type="error"
+          showIcon
+          style={{ marginBottom: 20 }}
+        />
+      ) : null}
 
       <Table
         dataSource={isData}
