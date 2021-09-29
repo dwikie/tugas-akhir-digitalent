@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Row, Form, Input, Button, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Authenticate } from "../../configs/authentication";
-import useAccount from "../../hooks/useAccount";
+import useGlobal from "../../hooks/useGlobal";
 import Checkbox from "antd/lib/checkbox/Checkbox";
 
 const { Text, Link } = Typography;
@@ -12,13 +11,14 @@ export default function FormLogin() {
   const history = useHistory();
   const [loggingIn, setloggingIn] = useState(false);
   const [form] = Form.useForm();
-  const [, setAccount] = useAccount();
+  const { account, login } = useGlobal();
+  const [, setUser] = account;
 
   const handleOnFinish = async (value) => {
     try {
       setloggingIn(true);
-      const result = await Authenticate(value);
-      setAccount({ ...value, isLoggedIn: true });
+      await login(value);
+      setUser({ ...value, isLoggedIn: true });
       history.replace("/dashboard");
     } catch (err) {
       setloggingIn(false);

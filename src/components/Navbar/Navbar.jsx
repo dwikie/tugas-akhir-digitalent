@@ -17,14 +17,17 @@ import {
 } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import useDashboard from "../../hooks/useDashboard";
+import useGlobal from "../../hooks/useGlobal";
 
 const { Header } = Layout;
 
 export default function Navbar() {
-  const { logout, setSidebar, sidebar } = useDashboard();
+  const { isSidebarVisible } = useDashboard();
+  const { logout } = useGlobal();
+  const [isVisible, setIsVisible] = isSidebarVisible;
 
   function handleCollapsed() {
-    setSidebar({ ...sidebar, isVisible: !sidebar.isVisible });
+    setIsVisible((isVisible) => !isVisible);
   }
 
   const menu = (
@@ -54,11 +57,7 @@ export default function Navbar() {
                 alignItems: "center",
               }}
             >
-              {sidebar.isVisible ? (
-                <MenuUnfoldOutlined />
-              ) : (
-                <MenuFoldOutlined />
-              )}
+              {isVisible ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             </Button>
             <Typography.Title level={4} style={{ margin: 0 }}>
               Home Loans A

@@ -1,10 +1,10 @@
-import React from "react";
+import { useContext } from "react";
 import { DashboardContext } from "../context/DashboardContext";
 
 export default function useDashboard() {
-  const context = React.useContext(DashboardContext);
+  const context = useContext(DashboardContext);
   if (!context) {
-    throw new Error("useUser must be inside of DashboardContext Provider");
+    throw new Error("useDashboard must be inside of DashboardContext Provider");
   }
   return context;
 }

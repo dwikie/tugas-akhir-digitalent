@@ -1,7 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
-import FormLogin from "./components/login/form-login";
-import Login from "./pages/login";
 
 global.matchMedia =
   global.matchMedia ||

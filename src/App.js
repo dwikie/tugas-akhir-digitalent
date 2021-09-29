@@ -1,11 +1,19 @@
 import "./App.css";
-import AccountProvider from "./context/AccountContext";
-import AppRoutes from "./routes/app.routes";
+import GlobalProvider from "./context/GlobalContext";
+import { Suspense, lazy } from "react";
+import SplashScreen from "./components/SplashScreen/SplashScreen";
+import { BrowserRouter as Router } from "react-router-dom";
+
+const AppRoutes = lazy(() => import("./routes/app.routes"));
 
 export default function App() {
   return (
-    <AccountProvider>
-      <AppRoutes />
-    </AccountProvider>
+    <Suspense fallback={<SplashScreen />}>
+      <Router>
+        <GlobalProvider>
+          <AppRoutes />
+        </GlobalProvider>
+      </Router>
+    </Suspense>
   );
 }

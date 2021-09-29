@@ -1,22 +1,22 @@
 import React from "react";
 import { Grid } from "antd";
 import useDashboard from "../../hooks/useDashboard";
-import SidebarSider from "./Sider/Sider";
-import SidebarDrawer from "./Drawer/Drawer";
+import SidebarSider from "./Sider";
+import SidebarDrawer from "./Drawer";
 
 export default function Sidebar({ sidebarItems }) {
   const gridBreakpoint = Grid.useBreakpoint();
-
-  const { sidebar, setSidebar } = useDashboard();
+  const { isSidebarVisible } = useDashboard();
+  const [isVisible, setIsVisible] = isSidebarVisible;
 
   function closeSidebar() {
-    setSidebar({ ...sidebar, isVisible: !sidebar.isVisible });
+    setIsVisible((isVisible) => !isVisible);
   }
 
   if (gridBreakpoint.lg) {
     return (
       <SidebarSider
-        isVisible={sidebar.isVisible}
+        isVisible={isVisible}
         menuItems={sidebarItems}
         closeSidebar={closeSidebar}
       />
@@ -24,7 +24,7 @@ export default function Sidebar({ sidebarItems }) {
   }
   return (
     <SidebarDrawer
-      isVisible={sidebar.isVisible}
+      isVisible={!isVisible}
       menuItems={sidebarItems}
       closeSidebar={closeSidebar}
     />

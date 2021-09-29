@@ -6,7 +6,10 @@ export const DashboardContext = React.createContext();
 
 export default function DashboardProvider(props) {
   const { replace } = useHistory();
-  const [sidebar, setSidebar] = React.useState({ isVisible: true });
+  const [isSidebarVisible, setIsSidebarVisible] = React.useState({
+    isVisible: true,
+  });
+  const [pageReady, setPageReady] = React.useState(false);
 
   function removeAuth() {
     DeAuthenticate();
@@ -14,10 +17,10 @@ export default function DashboardProvider(props) {
   }
 
   const returnValue = {
-    sidebar: sidebar,
-    setSidebar: setSidebar,
-    logout: removeAuth,
+    isSidebarVisible: [isSidebarVisible, setIsSidebarVisible],
+    pageReady: [pageReady, setPageReady],
     validateAuth: IsAuthenticated,
+    logout: removeAuth,
   };
 
   return <DashboardContext.Provider value={returnValue} {...props} />;

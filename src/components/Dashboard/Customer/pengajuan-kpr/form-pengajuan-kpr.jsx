@@ -8,7 +8,7 @@ import {
   Upload,
   message,
 } from "antd";
-import { FormPengajuan } from "../../../configs/formpengajuan";
+import { FormPengajuan } from "../../../../configs/formpengajuan";
 import { UploadOutlined } from "@ant-design/icons";
 export default function FormPengajuanKPR() {
   const [validated, setValidated] = useState(false);
@@ -20,10 +20,6 @@ export default function FormPengajuanKPR() {
     }
     return e && e.fileList;
   };
-
-  // const handleUploadSelfieKTP = async (files) => {
-  //   console.log(files);
-  // };
 
   const handleOnFinish = async (value) => {
     setValidated(true);

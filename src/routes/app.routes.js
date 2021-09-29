@@ -1,35 +1,32 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from "react-router-dom";
+import React from "react";
+import { Route, Redirect, Switch } from "react-router-dom";
 import AuthenticatedRoute from "../configs/authenticated-route";
-import useAccount from "../hooks/useAccount";
+import useGlobal from "../hooks/useGlobal";
+import { lazy } from "react";
+import { motion } from "framer-motion";
 
-import NotFound from "../pages/404";
-import Dashboard from "../pages/dashboard";
-import Login from "../pages/login";
+const NotFound = lazy(() => import("../pages/404"));
+const Dashboard = lazy(() => import("../pages/dashboard"));
+const Login = lazy(() => import("../pages/login"));
 
 export default function AppRoutes() {
-  const [account] = useAccount();
-
+  const { account } = useGlobal();
+  const [user] = account;
   return (
-    <Router>
-      <Switch>
-        <Route path="/login" component={Login} />
+    <Switch>
+      <Route path="/login">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <Login />
+        </motion.div>
+      </Route>
 
-        <AuthenticatedRoute
-          isAuthenticated={account?.isLoggedIn}
-          path="/dashboard"
-        >
-          <Dashboard />
-        </AuthenticatedRoute>
+      <AuthenticatedRoute isAuthenticated={user?.isLoggedIn} path="/dashboard">
+        <Dashboard />
+      </AuthenticatedRoute>
 
-        <Route exact path="/logout" render={() => <Redirect to="/login" />} />
-        <Route exact path="/" render={() => <Redirect to="/login" />} />
-        <Route path="*" component={NotFound} />
-      </Switch>
-    </Router>
+      <Route exact path="/logout" render={() => <Redirect to="/login" />} />
+      <Route exact path="/" render={() => <Redirect to="/login" />} />
+      <Route path="*" component={NotFound} />
+    </Switch>
   );
 }
