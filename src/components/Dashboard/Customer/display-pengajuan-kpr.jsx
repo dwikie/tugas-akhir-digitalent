@@ -1,15 +1,17 @@
 import React from "react";
 import { Button, Form, Typography } from "antd";
+import { useHistory, useRouteMatch } from "react-router";
 
-export default function DisplayPengajuanKPR(props) {
-  const { url } = props.match;
+export default function DisplayPengajuanKPR() {
+  const { url } = useRouteMatch();
+  const { push } = useHistory();
 
   function handleGoToDokumenTambahan() {
-    props.history.push(`${url}/dokumen-tambahan`);
+    push(`${url}/dokumen-tambahan`);
   }
 
   function handleGoToPengajuanKPR() {
-    props.history.push(`${url}/pengajuan-kpr`);
+    push(`${url}/pengajuan-kpr`);
   }
 
   return (
@@ -128,7 +130,7 @@ export default function DisplayPengajuanKPR(props) {
           </tr>
         </div>
 
-        <div class="d-flex justify-content-end">
+        <div className="d-flex justify-content-end">
           <Button type="primary" onClick={handleGoToPengajuanKPR}>
             Reset Pengajuan KPR
           </Button>

@@ -75,6 +75,11 @@
   }
 }
 
+.anticon > svg {
+  color: inherit;
+  font-size: inherit;
+}
+
 .ant-form-item-with-help {
     margin-bottom: .75rem;
 }

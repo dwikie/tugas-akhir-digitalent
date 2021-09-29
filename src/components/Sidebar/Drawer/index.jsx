@@ -1,21 +1,27 @@
 import { Drawer, Menu } from "antd";
-import React, { useEffect } from "react";
-import { useHistory, useLocation } from "react-router";
+import React from "react";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function SidebarDrawer({ isVisible, closeSidebar, menuItems }) {
-  const history = useHistory();
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    return () => null;
-  }, []);
+  function handleLinkClick(item) {
+    return function (e) {
+      if (item.to === pathname) {
+        e.preventDefault();
+        return;
+      }
+      closeSidebar();
+      return;
+    };
+  }
 
   return (
     <Drawer
       title="Basic Drawer"
       placement="left"
       push={400}
-      visible={!isVisible}
+      visible={isVisible}
       onClose={closeSidebar}
       bodyStyle={{ padding: 0 }}
     >
@@ -31,13 +37,14 @@ export default function SidebarDrawer({ isVisible, closeSidebar, menuItems }) {
               key={item.to}
               icon={<item.icon style={{ display: "flex" }} />}
               style={{ display: "flex", alignItems: "center" }}
-              onClick={(e) => {
-                if (e.key === pathname) return;
-                history.push(item.to);
-                closeSidebar();
-              }}
             >
-              {item.label}
+              <Link
+                to={item.to}
+                onClick={handleLinkClick(item)}
+                style={{ color: "inherit" }}
+              >
+                {item.label}
+              </Link>
             </Menu.Item>
           );
         })}

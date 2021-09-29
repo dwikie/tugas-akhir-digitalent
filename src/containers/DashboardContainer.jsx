@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, useMemo } from "react";
 import { Layout } from "antd";
-import Sidebar from "../components/Sidebar/Sidebar";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import SwitchMotion from "../configs/switch-motion";
+
+import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar/Navbar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PageIndicator from "../components/PageIndicator/PageIndicator";
 
 const { Content } = Layout;
 
 export default function DashboardContainer({ routes }) {
   const [sidebarItems, setSidebarItems] = useState([]);
+  const dashboardRoutes = useMemo(() => routes, [routes]);
 
   useEffect(() => {
     setSidebarItems(
@@ -24,28 +28,27 @@ export default function DashboardContainer({ routes }) {
   return (
     <Layout>
       <Navbar />
-      <Layout className="site-layout">
+      <Layout style={{ position: "relative", minHeight: "calc(100vh - 64px)" }}>
         <Router>
           <Sidebar sidebarItems={sidebarItems} />
-          <Content
-            style={{
-              padding: "1.25rem",
-              minHeight: "calc(100vh - 64px)",
-            }}
-          >
-            <div className="content bg-white px-3 py-4">
-              <Switch>
-                {Array.from(routes).map((route, index) => (
-                  <Route
-                    key={`dashboard-route-${index}`}
-                    exact={route.exact}
-                    path={route.path}
-                    component={route.component}
-                  />
-                ))}
-              </Switch>
-            </div>
-          </Content>
+          <Suspense fallback={<PageIndicator />}>
+            <Content
+              style={{
+                padding: "1.25rem",
+                boxShadow: "0px 0px 8px 2px inset #33333315",
+              }}
+            >
+              <div
+                className="content bg-white px-3 py-4"
+                style={{
+                  boxShadow: "0px 0px 8px 2px #33333310",
+                  overflow: "hidden",
+                }}
+              >
+                <SwitchMotion routes={dashboardRoutes} />
+              </div>
+            </Content>
+          </Suspense>
         </Router>
       </Layout>
     </Layout>

@@ -6,14 +6,15 @@ import {
 } from "react-router-dom";
 import DashboardContainer from "../containers/DashboardContainer";
 import DashboardProvider from "../context/DashboardContext";
-import useAccount from "../hooks/useAccount";
+import useGlobal from "../hooks/useGlobal";
 import {
   DashboardPetugasRoutes,
   DashboardCustomerRoutes,
-} from "../routes/DashboardRoutes.js";
+} from "../routes/dashboard.routes.js";
 
 export default function Dashboard() {
-  const [account] = useAccount();
+  const { account } = useGlobal();
+  const [user] = account;
   const { url } = useRouteMatch();
 
   return (
@@ -22,7 +23,7 @@ export default function Dashboard() {
         <Route
           path={url}
           render={() =>
-            account.isPetugas ? (
+            user?.isPetugas ? (
               <DashboardContainer routes={DashboardPetugasRoutes} />
             ) : (
               <DashboardContainer routes={DashboardCustomerRoutes} />

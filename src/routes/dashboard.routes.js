@@ -1,10 +1,23 @@
 import { FileSearchOutlined, HomeOutlined } from "@ant-design/icons";
-import BerandaCustomer from "../components/customer/beranda";
-import DokumenTambahan from "../components/customer/dokumen-tambahan";
-import PengajuanKPR from "../components/customer/pengajuan-kpr/pengajuan-kpr";
-import BerandaPetugas from "../components/petugas/beranda";
-import DetailPengajuan from "../components/petugas/detail-pengajuan";
-import ListPengajuan from "../components/petugas/list-pengajuan";
+import { lazy } from "react";
+
+const BerandaCustomer = lazy(() =>
+  import("../components/Dashboard/Customer/beranda"),
+);
+const DokumenTambahan = lazy(() =>
+  import("../components/Dashboard/Customer/dokumen-tambahan"),
+);
+const PengajuanKPR = lazy(() =>
+  import("../components/Dashboard/Customer/pengajuan-kpr/pengajuan-kpr"),
+);
+const BerandaPetugas = lazy(() =>
+  import("../components/Dashboard/Petugas/beranda"),
+);
+const DetailPengajuan = lazy(() =>
+  import("../components/Dashboard/Petugas/detail-pengajuan"),
+);
+const ListPengajuan = lazy(() => import("../layouts/_ListPengajuan"));
+const NotFound = lazy(() => import("../pages/404"));
 
 export const DashboardPetugasRoutes = [
   {
@@ -29,6 +42,10 @@ export const DashboardPetugasRoutes = [
     path: "/dashboard/pengajuan/:id",
     exact: true,
     component: DetailPengajuan,
+  },
+  {
+    path: "/dashboard/*",
+    component: NotFound,
   },
 ];
 
