@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
-import { useRouteMatch } from "react-router-dom";
+import React from "react";
 
 import { Descriptions, Button, Typography } from "antd";
-import FormKelengkapanKPR from "./form-kelengkapan-KPR";
-import { httpAuth } from "../../../configs/axios-instances";
-import apiDetail from "./detail-pengajuan-petugas";
 
 export default function DetailPengajuan() {
   // const { params } = useRouteMatch();
@@ -35,5 +31,4 @@ export default function DetailPengajuan() {
       </Descriptions>
     </div>
   );
-  // <div>Detail Pengajuan {params.id}</div>;
 }

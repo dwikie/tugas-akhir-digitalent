@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState, useMemo } from "react";
 import { Layout } from "antd";
-import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import SwitchMotion from "../configs/switch-motion";
 
 import Sidebar from "../components/Sidebar";
