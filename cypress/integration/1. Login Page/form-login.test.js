@@ -1,19 +1,19 @@
 /// <reference types="cypress" />
 
 describe("Page Login", () => {
-  it("Render Page", () => {
+  beforeEach(() => {
     cy.visit("/login");
-    describe("Validate Form Login", () => {
-      cy.get("form");
-      cy.get("form input[type=text][name=username]");
-      cy.get("form input[type=password][name=password]");
-      cy.get("form button[type=submit]");
-    });
+  });
+
+  it("Validate Form Login", () => {
+    cy.get("form");
+    cy.get("form input[type=text][name=username]");
+    cy.get("form input[type=password][name=password]");
+    cy.get("form button[type=submit]");
   });
 
   describe("Test Login", () => {
     it("Valid Username & Password", () => {
-      cy.visit("/login");
       cy.get("form");
       cy.get("form input[type=text][name=username]").type("valid-username");
       cy.get("form input[type=password][name=password]").type("valid-password");
@@ -32,7 +32,6 @@ describe("Page Login", () => {
     });
 
     it("Empty Username & Password", () => {
-      cy.visit("/login");
       cy.get("form");
       cy.get("form input[type=text][name=username]");
       cy.get("form input[type=password][name=password]");
