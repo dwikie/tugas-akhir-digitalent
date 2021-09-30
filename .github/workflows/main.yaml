@@ -13,6 +13,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: yarn build
-          start: yarn serve -s build
+          build: CI=true yarn run build
+          start: yarn run serve build -s
           wait-on: "http://localhost:5000"
