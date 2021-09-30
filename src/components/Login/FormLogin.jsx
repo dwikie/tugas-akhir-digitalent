@@ -35,7 +35,7 @@ export default function FormLogin() {
         onFinish={handleOnFinish}
       >
         <Form.Item
-          name="username"
+          name={["login", "username"]}
           rules={[
             {
               required: true,
@@ -46,11 +46,12 @@ export default function FormLogin() {
           <Input
             prefix={<UserOutlined style={{ marginRight: "8px" }} />}
             placeholder="Username"
+            name="username"
           />
         </Form.Item>
 
         <Form.Item
-          name="password"
+          name={["login", "password"]}
           rules={[
             {
               required: true,
@@ -61,6 +62,7 @@ export default function FormLogin() {
           <Input.Password
             prefix={<LockOutlined style={{ marginRight: "8px" }} />}
             placeholder="Password"
+            name="password"
           />
         </Form.Item>
 
