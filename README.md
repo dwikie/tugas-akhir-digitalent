@@ -1,3 +1,5 @@
+![Cypress](https://github.com/dwikie/tugas-akhir-digitalent/actions/workflows/main.yaml/badge.svg)
+
 # Getting Started
 
   * [Read Guidelines](#english)

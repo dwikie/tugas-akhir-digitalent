@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Card, Typography } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import FormLogin from "../components/login/form-login";
+import FormLogin from "../components/Login/FormLogin";
 
 const { Title } = Typography;
 
