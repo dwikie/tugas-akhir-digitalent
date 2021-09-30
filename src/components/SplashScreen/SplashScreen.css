@@ -1,0 +1,13 @@
+.splash-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.splash-screen-indicator-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
