@@ -11,6 +11,13 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
+
+Cypress.Commands.add("loginAsPetugas", () => {
+  window.localStorage.setItem(
+    "auth-token",
+    JSON.stringify({ isPetugas: true, isLoggedIn: true }),
+  );
+});
 //
 //
 // -- This is a child command --

@@ -54,7 +54,7 @@ export default function FormPengajuanKPR() {
             },
           ]}
         >
-          <Input />
+          <Input name="nik" />
         </Form.Item>
         <Form.Item
           name="nama_lengkap"
@@ -66,7 +66,7 @@ export default function FormPengajuanKPR() {
             },
           ]}
         >
-          <Input />
+          <Input name="nama_lengkap" />
         </Form.Item>
         <Form.Item
           name="tempat_lahir"
@@ -78,7 +78,7 @@ export default function FormPengajuanKPR() {
             },
           ]}
         >
-          <Input />
+          <Input name="tempat_lahir" />
         </Form.Item>
         <Form.Item
           name="tanggal_lahir"
@@ -90,7 +90,7 @@ export default function FormPengajuanKPR() {
             },
           ]}
         >
-          <DatePicker />
+          <DatePicker name="tanggal_lahir" />
         </Form.Item>
         <Form.Item
           name="pekerjaan"
@@ -102,7 +102,7 @@ export default function FormPengajuanKPR() {
             },
           ]}
         >
-          <Input />
+          <Input name="pekerjaan" />
         </Form.Item>
         <Form.Item
           name="pendapatan_perbulan"
@@ -114,7 +114,7 @@ export default function FormPengajuanKPR() {
             },
           ]}
         >
-          <InputNumber />
+          <InputNumber name="pendapatan_perbulan" />
         </Form.Item>
         <Form.Item
           name="bukti_ktp"
