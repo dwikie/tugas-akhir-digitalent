@@ -121,7 +121,7 @@ export default function FormPengajuanKPR() {
           label="Bukti Selfie KTP"
           rules={[
             {
-              required: true,
+              // required: true,
               message: "Mohon masukkan Bukti Selfie KTP",
             },
           ]}
@@ -150,7 +150,7 @@ export default function FormPengajuanKPR() {
           label="Bukti Slip Gaji Suami dan/atau istri"
           rules={[
             {
-              required: true,
+              // required: true,
               message: "Mohon masukkan Bukti Gaji Suami dan/atau istri",
             },
           ]}
