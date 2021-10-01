@@ -19,11 +19,11 @@ describe("Form Pengajuan", () => {
     cy.get("form input[type=text][name=tempat_lahir]").type("Jakarta");
     cy.get("input#tanggal_lahir").trigger("mousedown");
     cy.get(".ant-picker-date-panel [title='2021-09-27']").click();
-    cy.get("input#tanggal_lahir").should("have.value", '2021-09-27');
+    cy.get("input#tanggal_lahir").should("have.value", "2021-09-27");
     cy.get("form input[type=text][name=pekerjaan]").type("mahasiswa");
-    cy.get("form input[name=pendapatan_perbulan").type("2000000"); 
-    cy.get("form input[id=selfie]"); 
-    cy.get("form input[id=slip_gaji]"); 
+    cy.get("form input[name=pendapatan_perbulan").type("2000000");
+    cy.get("form input[id=selfie]");
+    cy.get("form input[id=slip_gaji]");
     cy.get("form button[type=submit]").click();
   });
   it("Empty Form", () => {
