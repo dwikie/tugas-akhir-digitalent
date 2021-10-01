@@ -17,7 +17,7 @@ describe("Form Pengajuan", () => {
     cy.get("form input[type=text][name=nik]").type("332707150992002");
     cy.get("form input[type=text][name=nama_lengkap]").type("kevin");
     cy.get("form input[type=text][name=tempat_lahir]").type("Jakarta");
-    cy.get("form input[id=tanggal_lahir]").type("2021");
+    cy.get("form input[id=tanggal_lahir]");
     cy.get("form input[type=text][name=pekerjaan]").type("mahasiswa");
     // cy.get("form input[type=number][name=pendapatan_perbulan"); error
     // cy.get("form input[type=text][id=selfie]"); error
