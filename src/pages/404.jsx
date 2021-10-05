@@ -3,7 +3,7 @@ import React from "react";
 
 export default function NotFound() {
   return (
-    <Row justify={"center"}>
+    <Row align="middle" style={{ flexDirection: "column" }}>
       <Col>
         <img
           width={300}
