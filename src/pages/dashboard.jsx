@@ -4,13 +4,13 @@ import {
   Route,
   useRouteMatch,
 } from "react-router-dom";
-import DashboardContainer from "../containers/DashboardContainer";
+import DashboardLayout from "../layouts/DashboardLayout.";
 import DashboardProvider from "../context/DashboardContext";
 import useGlobal from "../hooks/useGlobal";
 import {
   DashboardPetugasRoutes,
   DashboardCustomerRoutes,
-} from "../routes/dashboard.routes.js";
+} from "../router/dashboard.routes.js";
 
 export default function Dashboard() {
   const { account } = useGlobal();
@@ -24,9 +24,9 @@ export default function Dashboard() {
           path={url}
           render={() =>
             user?.isPetugas ? (
-              <DashboardContainer routes={DashboardPetugasRoutes} />
+              <DashboardLayout routes={DashboardPetugasRoutes} />
             ) : (
-              <DashboardContainer routes={DashboardCustomerRoutes} />
+              <DashboardLayout routes={DashboardCustomerRoutes} />
             )
           }
         />

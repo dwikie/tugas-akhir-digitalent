@@ -4,7 +4,7 @@ import { Suspense, lazy } from "react";
 import SplashScreen from "./components/SplashScreen/SplashScreen";
 import { BrowserRouter as Router } from "react-router-dom";
 
-const AppRoutes = lazy(() => import("./routes/app.routes"));
+const AppRoutes = lazy(() => import("./router/app.routes"));
 
 export default function App() {
   return (
