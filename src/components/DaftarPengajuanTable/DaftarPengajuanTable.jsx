@@ -12,6 +12,7 @@ export default function TableDaftarPengajuan({
     <>
       {error ? (
         <Alert
+          data-testid="alert-daftar-pengajuan"
           message={`Terjadi kesalahan. ${error}`}
           type="error"
           showIcon
@@ -19,6 +20,7 @@ export default function TableDaftarPengajuan({
         />
       ) : null}
       <Table
+        data-testid="table-daftar-pengajuan"
         pagination={false}
         dataSource={data}
         rowKey={(record) => record.id_pengajuan}
@@ -26,6 +28,7 @@ export default function TableDaftarPengajuan({
         locale={{
           emptyText: loading && (
             <Skeleton
+              data-testid="skeleton-daftar-pengajuan"
               active={true}
               paragraph={{ width: "100%", rows: 5 }}
               title={false}
