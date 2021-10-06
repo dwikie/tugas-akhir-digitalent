@@ -65,14 +65,18 @@ describe("Rendering Table", () => {
   });
 
   it("With data and clicked function", () => {
-    const mock = jest.fn();
-    render(
+    const onTableRowClick = jest.fn();
+
+    const { container } = render(
       <DaftarPengajuanTable
         data={fakeData}
         columns={Columns}
         loading={false}
-        onTableRowClick={mock}
+        onTableRowClick={onTableRowClick}
       />,
     );
+    const tableRow = container.querySelector(".ant-table-row");
+    fireEvent.click(tableRow);
+    expect(tableRow).not.toBeNull();
   });
 });
