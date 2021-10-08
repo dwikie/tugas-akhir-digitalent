@@ -1,4 +1,4 @@
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, Empty } from "antd";
 import React, { useState } from "react";
 import Title from "../../../components/Title";
 import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR";
@@ -6,11 +6,22 @@ import DisplayKelengkapanDokumen from "../../../components/DisplayKelengkapanDok
 import { useHistory, useRouteMatch } from "react-router";
 
 export default function BerandaCustomer() {
+
+  // return <Empty description="Anda sedang tidak mengajukan KPR saat ini" />;
+
   const [detailPengajuan] = useState(null);
   const [kelengkapanDokumen] = useState(null);
 
   const { push } = useHistory();
   const { url } = useRouteMatch();
+
+  // useState (( ) => {
+  //   const getDetail = async () => {
+  //     const { data } = await getById(1).start();
+  //     setDetailPengajuan (data);
+  //   };
+  //   getDetail();
+  // }, []);
 
   return (
     <Row gutter={[16, 12]} style={{ flexDirection: "column" }}>
