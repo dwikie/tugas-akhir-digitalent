@@ -23,7 +23,7 @@ describe("Render Daftar Pengajuan", () => {
   // });
 
   it("React.Suspense > Lazy Component > No Data", async () => {
-    const { container } = render(
+    const { debug, container } = render(
       <MemoryRouter
         initialEntries={[
           {

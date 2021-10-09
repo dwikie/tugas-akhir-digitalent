@@ -6,7 +6,7 @@ import { useHistory, useRouteMatch } from "react-router";
 import DaftarPengajuanTable from "../../../components/DaftarPengajuanTable";
 import SPengajuan from "../../../services/SPengajuan";
 import Columns from "./TableColumns";
-import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
+// import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
 
 export default function DaftarPengajuan() {
   const service = useMemo(() => new SPengajuan(), []);
@@ -83,9 +83,9 @@ export default function DaftarPengajuan() {
         error={talbeError}
         loading={isTableLoading}
       />
-      <Row justify="end">
+      {/* <Row justify="end">
         <DaftarPengajuanPagination />
-      </Row>
+      </Row> */}
     </Row>
   );
 }

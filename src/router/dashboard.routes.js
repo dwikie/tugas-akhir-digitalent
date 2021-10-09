@@ -42,6 +42,11 @@ export const DashboardPetugasRoutes = [
     component: DetailPengajuan,
   },
   {
+    path: "/dashboard/pengajuan?page=:id",
+    exact: true,
+    component: DaftarPengajuan,
+  },
+  {
     path: "/dashboard/*",
     component: NotFound,
   },
