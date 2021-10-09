@@ -1,6 +1,6 @@
 import { httpAuth, source } from "../configs/axios-instances";
 
-function getAll() {
+export function getAll(page = 1, offset = 10) {
   const cancelSource = source();
   return {
     start: function () {
@@ -32,7 +32,7 @@ function getAll() {
   };
 }
 
-function getById(idCustomer) {
+export function getById(idCustomer) {
   const cancelSource = source();
   return {
     start: function () {
@@ -67,12 +67,41 @@ function getById(idCustomer) {
   };
 }
 
-export default class SPengajuan {
-  constructor() {
-    this.getAll = getAll();
-    this.getById = getById;
-    this.postPengajuan = null;
-    this.postVerifikasiPengajuan = null;
-    this.postStatusPengajuan = null;
-  }
+export function getAdditionalDocument(idSubmission) {
+  const cancelSource = source();
+  return {
+    start: function () {
+      return new Promise(async (resolve, reject) => {
+        return await httpAuth
+          .get("kelengkapan_data", {
+            cancelToken: cancelSource.token,
+          })
+          .then(
+            (res) => {
+              try {
+                let result = res.data;
+                if (typeof res.data === "string") result = JSON.parse(res.data);
+                resolve(result);
+              } catch (err) {
+                reject(err);
+              }
+            },
+            (err) => {
+              reject(err);
+            },
+          )
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    cancel: cancelSource.cancel,
+  };
 }
+
+export default new (class ServicePengajuan {
+  constructor() {
+    this.getAll = getAll;
+    this.getById = getById;
+  }
+})();

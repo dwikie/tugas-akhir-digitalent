@@ -51,6 +51,7 @@ export default function Navbar() {
         <Col>
           <Space size={18}>
             <Button
+              type="default"
               onClick={handleCollapsed}
               style={{
                 display: "flex",

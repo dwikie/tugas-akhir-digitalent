@@ -18,7 +18,7 @@ export default function SidebarDrawer({ isVisible, closeSidebar, menuItems }) {
 
   return (
     <Drawer
-      title="Basic Drawer"
+      title="Home Loans"
       placement="left"
       push={400}
       visible={isVisible}
