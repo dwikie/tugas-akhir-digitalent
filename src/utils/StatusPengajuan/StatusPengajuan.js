@@ -11,6 +11,6 @@ export default function StatusPengajuan(status) {
     case 4:
       return { status: "success", detail: "Selesai" };
     default:
-      return { status: "default", detail: "-" };
+      throw RangeError(`Status ${status} tidak ditemukan`);
   }
 }

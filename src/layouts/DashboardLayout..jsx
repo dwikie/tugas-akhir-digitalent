@@ -39,8 +39,9 @@ export default function DashboardLayout({ routes }) {
               }}
             >
               <div
-                className="content bg-white px-3 py-4"
+                className="content bg-white"
                 style={{
+                  borderRadius: "4px",
                   boxShadow: "0px 0px 8px 2px #33333310",
                   overflow: "hidden",
                 }}
