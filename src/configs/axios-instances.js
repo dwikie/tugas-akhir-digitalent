@@ -1,11 +1,11 @@
 import axios from "axios";
-// import { IsAuthenticated } from "./authentication";
 
 const baseURL = process.env.REACT_APP_API_URL;
 const source = axios.CancelToken.source;
 
 const http = axios.create({
   baseURL: baseURL,
+  headers: {},
 });
 
 const httpAuth = axios.create({

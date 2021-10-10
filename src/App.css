@@ -110,6 +110,6 @@
   box-shadow: 2px 2px 10px 1px #33333315 !important;
 }
 
-.container {
-  padding: 1.25rem 1rem;
-}
+.ant-alert-message {
+  color: rgb(97, 97, 97);
+  font-size: 0.83em;
