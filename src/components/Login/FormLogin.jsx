@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Row, Form, Input, Button, Typography, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import useGlobal from "../../hooks/useGlobal";
-import Checkbox from "antd/lib/checkbox/Checkbox";
 
 const { Text, Link } = Typography;
 
