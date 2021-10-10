@@ -7,7 +7,7 @@ export default function BuatPengajuan() {
   return (
     <Row gutter={[16, 12]} style={{ flexDirection: "column" }}>
       <Title title="Buat Pengajuan" />
-      <section id="form-pengajuan-kpr">
+      <section className="container" id="form-pengajuan-kpr">
         <Col>
           <FormPengajuanKPR />
         </Col>

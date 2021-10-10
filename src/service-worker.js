@@ -2,7 +2,9 @@
 
 import { clientsClaim } from "workbox-core";
 import { registerRoute } from "workbox-routing";
+import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
+import { ExpirationPlugin } from "workbox-expiration";
 
 clientsClaim();
 
@@ -28,6 +30,27 @@ registerRoute(
     return true;
   },
   createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html"),
+);
+
+registerRoute(
+  ({ request }) =>
+    request.destination === "script" || request.destination === "style",
+  new StaleWhileRevalidate({
+    cacheName: "static-resources",
+  }),
+);
+
+registerRoute(
+  ({ request }) => request.destination === "image",
+  new CacheFirst({
+    cacheName: "images",
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+      }),
+    ],
+  }),
 );
 
 self.addEventListener("message", (event) => {
