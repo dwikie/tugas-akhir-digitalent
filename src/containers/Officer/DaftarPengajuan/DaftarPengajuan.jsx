@@ -53,10 +53,7 @@ export default function DaftarPengajuan() {
   return (
     <Row gutter={[0, 24]} style={{ flexDirection: "column" }}>
       <Col>
-        <Typography.Title level={5} style={{ textAlign: "center" }}>
-          Daftar Pengajuan
-        </Typography.Title>
-        <Divider />
+        <Title title="Daftar Pengajuan" />
       </Col>
       <Row
         justify={"space-between"}
