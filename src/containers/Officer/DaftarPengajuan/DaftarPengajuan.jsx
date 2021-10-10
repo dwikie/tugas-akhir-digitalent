@@ -7,7 +7,7 @@ import { useHistory, useRouteMatch } from "react-router";
 import DaftarPengajuanTable from "../../../components/DaftarPengajuanTable";
 import { getAll } from "../../../services/pengajuan-service";
 import Columns from "./TableColumns";
-import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
+// import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
 
 export default function DaftarPengajuan() {
   const { url } = useRouteMatch();
@@ -51,43 +51,41 @@ export default function DaftarPengajuan() {
   }
 
   return (
-    <Row gutter={[0, 16]} style={{ flexDirection: "column" }}>
-      <Title title="Daftar Pengajuan" />
-
-      <section className="container" id="daftar-pengajuan-action">
-        <Row
-          justify={"space-between"}
-          style={{ flexDirection: breakPoint.md ? "row" : "column-reverse" }}
-          gutter={[0, 20]}
-        >
-          <Col sm={24} md={8}>
-            <Input placeholder="Cari.." allowClear />
-          </Col>
-          <Col sm={24} md={8}>
-            <Button
-              style={{ width: "100%" }}
-              icon={<FilePdfOutlined />}
-              text="Download Daftar Pengajuan"
-            >
-              Download List Pengajuan
-            </Button>
-          </Col>
-        </Row>
-      </section>
-      <section className="container" id="daftar-pengajuan-table">
-        <Row style={{ flexDirection: "column" }} gutter={[0, 16]}>
-          <DaftarPengajuanTable
-            columns={Columns}
-            onTableRowClick={onTableRowClick}
-            data={tableData}
-            error={talbeError}
-            loading={isTableLoading}
-          />
-          <Row justify="end">
-            <DaftarPengajuanPagination />
-          </Row>
-        </Row>
-      </section>
+    <Row gutter={[0, 24]} style={{ flexDirection: "column" }}>
+      <Col>
+        <Typography.Title level={5} style={{ textAlign: "center" }}>
+          Daftar Pengajuan
+        </Typography.Title>
+        <Divider />
+      </Col>
+      <Row
+        justify={"space-between"}
+        style={{ flexDirection: breakPoint.md ? "row" : "column-reverse" }}
+        gutter={[0, 24]}
+      >
+        <Col sm={24} md={8}>
+          <Input placeholder="Cari.." allowClear />
+        </Col>
+        <Col sm={24} md={8}>
+          <Button
+            style={{ width: "100%" }}
+            icon={<FilePdfOutlined />}
+            text="Download Daftar Pengajuan"
+          >
+            Download List Pengajuan
+          </Button>
+        </Col>
+      </Row>
+      <DaftarPengajuanTable
+        columns={Columns}
+        onTableRowClick={onTableRowClick}
+        data={tableData}
+        error={talbeError}
+        loading={isTableLoading}
+      />
+      {/* <Row justify="end">
+        <DaftarPengajuanPagination />
+      </Row> */}
     </Row>
   );
 }
