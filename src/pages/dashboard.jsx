@@ -23,7 +23,7 @@ export default function Dashboard() {
         <Route
           path={url}
           render={() =>
-            user ? (
+            user?.role === "officer" ? (
               <DashboardLayout routes={DashboardPetugasRoutes} />
             ) : (
               <DashboardLayout routes={DashboardCustomerRoutes} />
