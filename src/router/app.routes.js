@@ -20,7 +20,7 @@ export default function AppRoutes() {
         </motion.div>
       </Route>
 
-      <AuthenticatedRoute isAuthenticated={user?.isLoggedIn} path="/dashboard">
+      <AuthenticatedRoute isAuthenticated={user?.role} path="/dashboard">
         <Dashboard />
       </AuthenticatedRoute>
 

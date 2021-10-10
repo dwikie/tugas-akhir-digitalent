@@ -8,7 +8,7 @@ export default function AuthenticatedRoute({
   return (
     <Route
       {...rest}
-      render={() => (isAuthenticated ? children : <Redirect to="/" />)}
+      render={() => (isAuthenticated ? children : <Redirect to="/login" />)}
     />
   );
 }
