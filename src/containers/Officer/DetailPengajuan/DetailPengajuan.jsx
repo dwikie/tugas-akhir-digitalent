@@ -1,29 +1,25 @@
 import { Col, Divider, Row, Typography } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR/DisplayPengajuanKPR";
-import SPengajuan from "../../../services/SPengajuan";
+import { getById } from "../../../services/pengajuan-service";
 import { useRouteMatch } from "react-router-dom";
 
 export default function DetailPengajuan() {
-  const service = useMemo(() => new SPengajuan(), []);
   const { params } = useRouteMatch();
   const [detail, setDetail] = useState({});
 
-  const getDetailPengajuan = useMemo(
-    () => service.getById(params.id),
-    [service, params.id],
-  );
+  const service = useMemo(() => getById(params.id), [params.id]);
 
   const populateDetailPengajuan = useCallback(async () => {
-    const { data } = await getDetailPengajuan.start();
+    const { data } = await service.start();
     setDetail(data);
     console.log(data);
-  }, [getDetailPengajuan]);
+  }, [service]);
 
   useEffect(() => {
     populateDetailPengajuan();
-    return () => getDetailPengajuan.cancel();
-  }, [populateDetailPengajuan, getDetailPengajuan]);
+    return () => service.cancel();
+  }, [populateDetailPengajuan, service]);
 
   return (
     <Row gutter={[0, 12]} style={{ flexDirection: "column" }}>
@@ -33,7 +29,7 @@ export default function DetailPengajuan() {
         </Typography.Title>
         <Divider />
       </Col>
-      <section style={{ whiteSpace: "nowrap" }}>
+      <section style={{ whiteSpace: "nowrap" }} className="container">
         <DisplayPengajuanKPR data={detail} showStatus />
       </section>
     </Row>

@@ -1,33 +1,50 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Row, Form, Input, Button, Typography } from "antd";
+import { Row, Form, Input, Button, Typography, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import useGlobal from "../../hooks/useGlobal";
-import Checkbox from "antd/lib/checkbox/Checkbox";
 
 const { Text, Link } = Typography;
 
 export default function FormLogin() {
   const history = useHistory();
   const [loggingIn, setloggingIn] = useState(false);
+  const [error, setError] = useState(null);
   const [form] = Form.useForm();
-  const { account, login } = useGlobal();
-  const [, setUser] = account;
+  const { login } = useGlobal();
 
   const handleOnFinish = async (value) => {
     try {
       setloggingIn(true);
       await login(value);
-      setUser({ ...value, isLoggedIn: true });
       history.replace("/dashboard");
     } catch (err) {
+      form.resetFields();
+      switch (err.response.status) {
+        case 404:
+          setError("Username atau Password salah");
+          form.getFieldInstance("username").focus();
+          break;
+        default:
+          console.log("Terjadi kesalahan.");
+          break;
+      }
       setloggingIn(false);
-      throw new Error(err);
     }
   };
 
   return (
     <>
+      {error && (
+        <Alert
+          style={{ marginBottom: "-1.25rem", marginTop: "1.75rem" }}
+          message={error}
+          type="error"
+          showIcon
+          closable
+          afterClose={() => setError(null)}
+        />
+      )}
       <Form
         id="login-form"
         style={{ margin: "2.75rem 0" }}
@@ -35,7 +52,7 @@ export default function FormLogin() {
         onFinish={handleOnFinish}
       >
         <Form.Item
-          name={["login", "username"]}
+          name={["username"]}
           rules={[
             {
               required: true,
@@ -51,7 +68,7 @@ export default function FormLogin() {
         </Form.Item>
 
         <Form.Item
-          name={["login", "password"]}
+          name={["password"]}
           rules={[
             {
               required: true,
@@ -64,14 +81,6 @@ export default function FormLogin() {
             placeholder="Password"
             name="password"
           />
-        </Form.Item>
-
-        <Form.Item
-          name="isPetugas"
-          valuePropName="checked"
-          initialValue={false}
-        >
-          <Checkbox>Petugas</Checkbox>
         </Form.Item>
 
         <Row justify="space-between">

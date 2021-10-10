@@ -1,16 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FilePdfOutlined } from "@ant-design/icons";
-import { Button, Col, Divider, Input, Row, Typography } from "antd";
+import { Button, Col, Input, Row } from "antd";
+import Title from "../../../components/Title";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useHistory, useRouteMatch } from "react-router";
 import DaftarPengajuanTable from "../../../components/DaftarPengajuanTable";
-import SPengajuan from "../../../services/SPengajuan";
+import { getAll } from "../../../services/pengajuan-service";
 import Columns from "./TableColumns";
 // import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
 
 export default function DaftarPengajuan() {
-  const service = useMemo(() => new SPengajuan(), []);
-
   const { url } = useRouteMatch();
   const { push } = useHistory();
   // const { search } = useLocation();
@@ -23,28 +22,29 @@ export default function DaftarPengajuan() {
   // const [page, setPage] = useState(() =>
   //   isNaN(initialPage.current) ? 1 : parseInt(initialPage.current),
   // );
+  const service = useMemo(() => getAll(1, 10), []);
 
   const breakPoint = useBreakpoint();
 
   const getPengajuan = useCallback(async () => {
     setIsTableLoading(true);
     try {
-      const { data } = await service.getAll.start();
+      const { data } = await service.start();
       setTableData(data);
       setIsTableLoading(false);
     } catch (error) {
       setTableError(error.message);
       setIsTableLoading(false);
     }
-  }, [service.getAll]);
+  }, [service]);
 
   useEffect(() => {
     getPengajuan();
     return () => {
-      service.getAll.cancel();
+      service.cancel();
       setTableData([]);
     };
-  }, [getPengajuan, service.getAll]);
+  }, [getPengajuan, service]);
 
   function onTableRowClick(id_pengajuan) {
     push(`${url}/${id_pengajuan}`);
