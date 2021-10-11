@@ -7,6 +7,7 @@ import { useHistory, useRouteMatch } from "react-router";
 import DaftarPengajuanTable from "../../../components/DaftarPengajuanTable";
 import { getAll } from "../../../services/pengajuan-service";
 import Columns from "./TableColumns";
+import ModalDaftarPengajuan from "../../../components/ModalDaftarPengajuan";
 // import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
 
 export default function DaftarPengajuan() {
@@ -17,6 +18,7 @@ export default function DaftarPengajuan() {
   // const initialPage = useRef(new URLSearchParams(search).get("page"));
 
   const [tableData, setTableData] = useState([]);
+  const [modalVisibility, setModalVisibility] = useState(false);
   const [talbeError, setTableError] = useState("");
   const [isTableLoading, setIsTableLoading] = useState(true);
   // const [page, setPage] = useState(() =>
@@ -50,6 +52,14 @@ export default function DaftarPengajuan() {
     push(`${url}/${id_pengajuan}`);
   }
 
+  function showModal() {
+    setModalVisibility(true);
+  }
+
+  function hideModal() {
+    setModalVisibility(false);
+  }
+
   return (
     <Row gutter={[0, 24]} style={{ flexDirection: "column" }}>
       <Col>
@@ -65,12 +75,17 @@ export default function DaftarPengajuan() {
         </Col>
         <Col sm={24} md={8}>
           <Button
+            onClick={showModal}
             style={{ width: "100%" }}
             icon={<FilePdfOutlined />}
             text="Download Daftar Pengajuan"
           >
             Download List Pengajuan
           </Button>
+          <ModalDaftarPengajuan
+            modalVisibility={modalVisibility}
+            hideModal={hideModal}
+          />
         </Col>
       </Row>
       <DaftarPengajuanTable
