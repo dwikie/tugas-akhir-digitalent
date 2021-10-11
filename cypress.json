@@ -1,0 +1,8 @@
+{
+    "baseUrl": "http://localhost:3000",
+    "defaultCommandTimeout": 15000,
+    "component": {
+        "testFiles": "**/*.test.{js,ts,jsx,tsx}",
+        "componentFolder": "src"
+    }
+}

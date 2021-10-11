@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Daftar Pengajuan React.Suspense > Lazy Component > No Data 1`] = `
+<div
+  class="ant-empty-description"
+>
+  No Data
+</div>
+`;
+
+exports[`Render Daftar Pengajuan React.Suspense > Lazy Component 1`] = `
+<h5
+  class="ant-typography"
+  style="text-align: center;"
+>
+  Daftar Pengajuan
+</h5>
+`;

@@ -1,0 +1,20 @@
+.ant-progress-inner {
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.ant-progress-bg {
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    transition-duration: 700ms;
+}
+
+.ant-progress {
+    display: flex;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+.ant-progress-outer {
+    display: contents;
+}
