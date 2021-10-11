@@ -1,5 +1,5 @@
 env: standard
-runtime: nodejs10
+runtime: nodejs12
 instance_class: F1
 automatic_scaling:
   max_instances: 1
