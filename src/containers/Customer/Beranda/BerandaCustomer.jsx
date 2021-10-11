@@ -1,4 +1,4 @@
-import { Button, Col, Row, Empty } from "antd";
+import { Button, Col, Row } from "antd";
 import { CaretRightFilled } from "@ant-design/icons";
 import React, { useState } from "react";
 import Title from "../../../components/Title";
@@ -8,8 +8,6 @@ import { useHistory, useRouteMatch } from "react-router";
 import { getById } from "../../../services/pengajuan-service";
 
 export default function BerandaCustomer() {
-  // return <Empty description="Anda sedang tidak mengajukan KPR saat ini" />;
-
   const [detailPengajuan, setDetailPengajuan] = useState(null);
   const [kelengkapanDokumen] = useState(null);
 

@@ -30,7 +30,7 @@ export default function ModalDaftarPengajuan({ modalVisibility, hideModal }) {
         padding: 0,
         lineHeight: 0,
       }}
-      width={"80%"}
+      width={innerWidth > 640 ? "80%" : "90%"}
       style={{
         top: innerHeight > 840 ? "100px" : 0,
         paddingBottom: innerHeight > 840 ? "24px" : 0,
