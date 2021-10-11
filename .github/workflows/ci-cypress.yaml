@@ -1,15 +1,11 @@
 name: Cypress
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - main
       - master
       - development
-  push:
-    branches-ignore:
-      - main
-      - master
 
 jobs:
   cypress-run:

@@ -1,0 +1,41 @@
+on:
+  pull_request:
+    branches:
+      - main
+env:
+  TEAM_NAME: ${{ secrets.TEAM_NAME }}
+name: Deploy to Google App Engine
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Update app.yaml
+        run: |-
+          envsubst < app.yaml.sh > app.yaml
+      - name: Deploy to App Engine
+        id: deploy
+        uses: google-github-actions/deploy-appengine@v0.2.0
+        with:
+          deliverables: app.yaml
+          project_id: ${{ secrets.GCP_PROJECT }}
+          credentials: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
