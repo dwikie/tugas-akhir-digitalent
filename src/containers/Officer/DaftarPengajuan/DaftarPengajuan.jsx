@@ -8,6 +8,7 @@ import DaftarPengajuanTable from "../../../components/DaftarPengajuanTable";
 import { getAll } from "../../../services/pengajuan-service";
 import Columns from "./TableColumns";
 import ModalDaftarPengajuan from "../../../components/ModalDaftarPengajuan";
+import ReportStyle from "./ReportStyle";
 // import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
 
 export default function DaftarPengajuan() {
@@ -16,8 +17,8 @@ export default function DaftarPengajuan() {
   // const { search } = useLocation();
 
   // const initialPage = useRef(new URLSearchParams(search).get("page"));
-
   const [tableData, setTableData] = useState([]);
+  const [reportData, setReportData] = useState([]);
   const [modalVisibility, setModalVisibility] = useState(false);
   const [talbeError, setTableError] = useState("");
   const [isTableLoading, setIsTableLoading] = useState(true);
@@ -25,7 +26,6 @@ export default function DaftarPengajuan() {
   //   isNaN(initialPage.current) ? 1 : parseInt(initialPage.current),
   // );
   const service = useMemo(() => getAll(1, 10), []);
-
   const breakPoint = useBreakpoint();
 
   const getPengajuan = useCallback(async () => {
@@ -52,13 +52,21 @@ export default function DaftarPengajuan() {
     push(`${url}/${id_pengajuan}`);
   }
 
-  function showModal() {
-    setModalVisibility(true);
-  }
-
   function hideModal() {
     setModalVisibility(false);
   }
+
+  const showModal = async () => {
+    try {
+      setModalVisibility(true);
+      const { result } = await service.start();
+      setReportData(result);
+      console.log(result);
+    } catch {
+      service.cancel();
+      setReportData([]);
+    }
+  };
 
   return (
     <Row gutter={[0, 24]} style={{ flexDirection: "column" }}>
@@ -75,7 +83,7 @@ export default function DaftarPengajuan() {
         </Col>
         <Col sm={24} md={8}>
           <Button
-            onClick={showModal}
+            onClick={async () => await showModal()}
             style={{ width: "100%" }}
             icon={<FilePdfOutlined />}
             text="Download Daftar Pengajuan"
@@ -83,6 +91,8 @@ export default function DaftarPengajuan() {
             Download List Pengajuan
           </Button>
           <ModalDaftarPengajuan
+            reportStyle={ReportStyle}
+            data={reportData}
             modalVisibility={modalVisibility}
             hideModal={hideModal}
           />

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Row, Form, Input, Button, Typography, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import useGlobal from "../../hooks/useGlobal";
 
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 export default function FormLogin() {
   const history = useHistory();
@@ -26,7 +26,7 @@ export default function FormLogin() {
           form.getFieldInstance("username").focus();
           break;
         default:
-          console.log("Terjadi kesalahan.");
+          setError("Terjadi kesalahan: ", err.message);
           break;
       }
       setloggingIn(false);
@@ -93,12 +93,12 @@ export default function FormLogin() {
             htmlType="submit"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <strong>Login</strong>
+            <strong>Masuk</strong>
           </Button>
         </Row>
       </Form>
       <Text type="secondary">
-        Belum punya akun ? daftar <Link underline>disini</Link>
+        Belum punya akun ? daftar <Link to="/register">disini</Link>
       </Text>
     </>
   );

@@ -6,7 +6,7 @@ export function getAll(page = 1, offset = 10) {
     start: function () {
       return new Promise(async (resolve, reject) => {
         return await httpAuth
-          .get("list_pengajuan", {
+          .get("/submission", {
             cancelToken: cancelSource.token,
           })
           .then(
