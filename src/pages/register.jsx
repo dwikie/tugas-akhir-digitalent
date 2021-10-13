@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Card, Typography } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import FormLogin from "../components/Login/FormLogin";
+import FormRegister from "../components/FormRegister/FormRegister";
 
 const { Title } = Typography;
 
-export default function Login() {
+export default function Register() {
   const breakPoint = useBreakpoint();
   const [cardBorder, setCardBorder] = useState(true);
   const [cardShadow, setCardShadow] = useState(true);
@@ -34,9 +34,9 @@ export default function Login() {
               Home Loans A
             </Title>
             <Title level={5} style={{ textAlign: "center" }}>
-              Masuk
+              Daftar
             </Title>
-            <FormLogin />
+            <FormRegister />
           </Card>
         </Col>
       </Row>
