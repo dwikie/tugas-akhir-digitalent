@@ -7,7 +7,6 @@ const source = axios.CancelToken.source;
 
 const http = axios.create({
   baseURL: BASE_URL,
-  headers: {},
 });
 
 const httpAuth = axios.create({

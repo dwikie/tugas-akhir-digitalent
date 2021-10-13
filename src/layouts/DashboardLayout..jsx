@@ -12,6 +12,24 @@ const { Content } = Layout;
 export default function DashboardLayout({ routes }) {
   const [sidebarItems, setSidebarItems] = useState([]);
   const dashboardRoutes = useMemo(() => routes, [routes]);
+  const switchAnimation = {
+    initial: {
+      y: -10,
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        ease: "easeInOut",
+        duration: 0.15,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 10,
+    },
+  };
 
   useEffect(() => {
     setSidebarItems(
@@ -47,7 +65,12 @@ export default function DashboardLayout({ routes }) {
                   overflow: "hidden",
                 }}
               >
-                <SwitchMotion routes={dashboardRoutes} />
+                <SwitchMotion
+                  animate={switchAnimation.animate}
+                  initial={switchAnimation.initial}
+                  exit={switchAnimation.exit}
+                  routes={dashboardRoutes}
+                />
               </div>
             </Content>
           </Suspense>

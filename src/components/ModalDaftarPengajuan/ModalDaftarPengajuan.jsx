@@ -1,9 +1,16 @@
 import { Modal } from "antd";
+import { DateToLocale } from "../../utils/DateConversion";
 import React, { useEffect, useState } from "react";
-import { PDFViewer } from "@react-pdf/renderer";
-import ReportDaftarPengajuan from "../ReportDaftarPengajuan";
+import { Document, Page, PDFViewer, Text, View } from "@react-pdf/renderer";
+import FormatNumberCurrency from "../../utils/FormatNumberCurrency";
+import { StatusPengajuan } from "../../utils";
 
-export default function ModalDaftarPengajuan({ modalVisibility, hideModal }) {
+export default function ModalDaftarPengajuan({
+  modalVisibility,
+  hideModal,
+  data,
+  reportStyle,
+}) {
   const [innerWidth, setInnerWIdth] = useState(window.innerWidth);
   const [innerHeight, setinnerHeight] = useState(window.innerHeight);
 
@@ -14,7 +21,6 @@ export default function ModalDaftarPengajuan({ modalVisibility, hideModal }) {
       setInnerWIdth(newWidth);
       setinnerHeight(newHeight);
     }
-
     window.addEventListener("resize", onWindowResize);
     return () => window.removeEventListener("resize", onWindowResize);
   }, []);
@@ -46,7 +52,143 @@ export default function ModalDaftarPengajuan({ modalVisibility, hideModal }) {
           border: "none",
         }}
       >
-        <ReportDaftarPengajuan />
+        <Document>
+          <Page style={reportStyle.body} size="Legal">
+            <View style={reportStyle.infoWrapper}>
+              <Text style={reportStyle.info}>
+                Report Daftar Pengajuan - Home Loans
+              </Text>
+              <Text style={reportStyle.info}>
+                {DateToLocale(new Date(), {
+                  locale: navigator.language || "id-ID",
+                })}
+              </Text>
+            </View>
+            <View style={reportStyle.title}>
+              <Text>Daftar Pengajuan</Text>
+            </View>
+            <View style={reportStyle.table}>
+              {/* thead */}
+              <View style={reportStyle.tableHead}>
+                <View style={{ ...reportStyle.tableRow, width: "6%" }}>
+                  <Text style={{ ...reportStyle.tableHeadCell, margin: 0 }}>
+                    No.
+                  </Text>
+                </View>
+                <View style={reportStyle.tableRow}>
+                  <Text style={reportStyle.tableHeadCell}>
+                    Data Diri Pengaju
+                  </Text>
+                </View>
+                <View style={reportStyle.tableRow}>
+                  <Text style={reportStyle.tableHeadCell}>Data KPR</Text>
+                </View>
+              </View>
+              {/* tbody */}
+              {data.length ? (
+                data.map((pengajuan, index) => (
+                  <View style={reportStyle.tableBody}>
+                    <View style={{ ...reportStyle.tableBodyRow, width: "6%" }}>
+                      <Text style={reportStyle.tableBodyCell}>{index + 1}</Text>
+                    </View>
+                    <View style={reportStyle.tableBodyRow}>
+                      <View style={reportStyle.tableDataRow}>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>NIK</Text>
+                        </View>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>{pengajuan?.Nik}</Text>
+                        </View>
+                      </View>
+                      <View style={reportStyle.tableDataRow}>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>Nama Lengkap</Text>
+                        </View>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>{pengajuan?.NamaLengkap}</Text>
+                        </View>
+                      </View>
+                      <View style={reportStyle.tableDataRow}>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>Tempat, Tanggal Lahir</Text>
+                        </View>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>{`${pengajuan?.TempatLahir}, ${DateToLocale(
+                            pengajuan?.TanggalLahir,
+                            {},
+                          )}`}</Text>
+                        </View>
+                      </View>
+                      <View style={reportStyle.tableDataRow}>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>Alamat</Text>
+                        </View>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>{pengajuan?.Alamat}</Text>
+                        </View>
+                      </View>
+                      <View style={reportStyle.tableDataRow}>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>Pekerjaan</Text>
+                        </View>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>{pengajuan?.Pekerjaan}</Text>
+                        </View>
+                      </View>
+                      <View style={reportStyle.tableDataRow}>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>Pendapatan Perbulan</Text>
+                        </View>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>
+                            {FormatNumberCurrency(
+                              pengajuan?.PendapatanPerbulan,
+                              {},
+                            )}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={reportStyle.tableDataRow}>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>Status Verifikasi</Text>
+                        </View>
+                        <View style={reportStyle.tableDataCol}>
+                          <Text>
+                            {StatusPengajuan(pengajuan?.Status).detail}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    {pengajuan?.CompleteDoc?.ID || (
+                      <View style={reportStyle.tableBodyRow}>
+                        <Text
+                          style={{
+                            ...reportStyle.tableBodyCell,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            margin: "auto",
+                          }}
+                        >
+                          Belum menginput Dokumen Pelengkap
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                ))
+              ) : (
+                <View style={reportStyle.tableBody}>
+                  <View style={reportStyle.tableDataRow}>
+                    <View style={{ width: "100%", margin: "auto" }}>
+                      <Text>Data tidak ditemukan</Text>
+                    </View>
+                  </View>
+                </View>
+              )}
+            </View>
+          </Page>
+        </Document>
       </PDFViewer>
     </Modal>
   );

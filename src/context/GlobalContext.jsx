@@ -13,7 +13,7 @@ export default function GlobalProvider(props) {
   const { replace } = useHistory();
 
   const [pageReady, setPageReady] = React.useState(false);
-  console.log(account);
+
   const value = {
     account: [account, setAccount],
     pageReady: [pageReady, setPageReady],
