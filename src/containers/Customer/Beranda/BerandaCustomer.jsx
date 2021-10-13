@@ -6,6 +6,8 @@ import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR";
 import DisplayKelengkapanDokumen from "../../../components/DisplayKelengkapanDokumen";
 import { useHistory, useRouteMatch } from "react-router";
 import { getById } from "../../../services/pengajuan-service";
+import useGlobal from "../../../hooks/useGlobal";
+import { getCustomerSubmission} from "../../../services/pengajuan-service";
 
 export default function BerandaCustomer() {
   const [detailPengajuan, setDetailPengajuan] = useState(null);
@@ -14,9 +16,14 @@ export default function BerandaCustomer() {
   const { push } = useHistory();
   const { url } = useRouteMatch();
 
+  const { account } = useGlobal();
+  const [user] = account;
+  console.log(detailPengajuan);
+
+
   useState(() => {
     const getDetail = async () => {
-      const { data } = await getById(1).start();
+      const { data } = await getCustomerSubmission().start();
       setDetailPengajuan(data);
     };
     getDetail();

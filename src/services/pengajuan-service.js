@@ -67,6 +67,38 @@ export function getById(idCustomer) {
   };
 }
 
+export function getCustomerSubmission (){
+  const cancelSource = source();
+  return {
+    start: function () {
+      return new Promise(async (resolve, reject) => {
+        return await httpAuth
+          .get("/customer_submission", {
+            cancelToken: cancelSource.token,
+          })
+          .then(
+            (res) => {
+              try {
+                let result = res.data;
+                if (typeof res.data === "string") result = JSON.parse(res.data);
+                resolve(result);
+              } catch (err) {
+                reject(err);
+              }
+            },
+            (err) => {
+              reject(err);
+            },
+          )
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    cancel: cancelSource.cancel,
+  };
+}
+
 export function getAdditionalDocument(idSubmission) {
   const cancelSource = source();
   return {
