@@ -15,12 +15,12 @@ const Columns = [
   },
   {
     title: "Nama",
-    dataIndex: "nama_lengkap",
+    dataIndex: "NamaLengkap",
     key: "nama",
   },
   {
     title: "Status",
-    dataIndex: "status",
+    dataIndex: "Status",
     key: "status",
     render: (value) => {
       return StatusPengajuan(value).detail;

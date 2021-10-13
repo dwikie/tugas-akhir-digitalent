@@ -80,7 +80,7 @@ export default function TableDaftarPengajuan({
           },
         }}
         dataSource={data}
-        rowKey={(record) => record.id_pengajuan}
+        rowKey={(record) => record.ID}
         columns={columns}
         locale={{
           emptyText: loading && (
@@ -94,7 +94,7 @@ export default function TableDaftarPengajuan({
         }}
         onRow={(record) => {
           return {
-            onClick: () => onTableRowClick(record.id_pengajuan),
+            onClick: () => onTableRowClick(record.ID),
             style: {
               cursor: "pointer",
             },
