@@ -13,7 +13,6 @@ export function getAll(page = 1, offset = 10) {
             (res) => {
               try {
                 let result = res.data.result;
-                // if (typeof res.data.result === "string") result = JSON.parse(res.data);
                 resolve(result);
               } catch (err) {
                 reject(err);
@@ -48,7 +47,6 @@ export function getById(idCustomer) {
             (res) => {
               try {
                 let result = res.data;
-                if (typeof res.data === "string") result = JSON.parse(res.data);
                 resolve(result);
               } catch (err) {
                 reject(err);
@@ -67,7 +65,7 @@ export function getById(idCustomer) {
   };
 }
 
-export function getCustomerSubmission (){
+export function getCustomerSubmission() {
   const cancelSource = source();
   return {
     start: function () {
@@ -80,7 +78,6 @@ export function getCustomerSubmission (){
             (res) => {
               try {
                 let result = res.data;
-                if (typeof res.data === "string") result = JSON.parse(res.data);
                 resolve(result);
               } catch (err) {
                 reject(err);

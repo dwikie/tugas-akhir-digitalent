@@ -22,6 +22,7 @@ export default function FormLogin() {
       form.resetFields();
       switch (err.response.status) {
         case 404:
+        case 401:
           setError("Username atau Password salah");
           form.getFieldInstance("username").focus();
           break;

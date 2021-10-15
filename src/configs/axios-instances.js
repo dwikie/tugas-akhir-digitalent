@@ -11,9 +11,19 @@ const http = axios.create({
 
 const httpAuth = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${Cookies.get(AUTH_KEY)}`,
-  },
 });
+
+httpAuth.interceptors.request.use(
+  (configs) => {
+    configs.headers = {
+      ...configs.headers,
+      Authorization: `Bearer ${Cookies.get(AUTH_KEY)}`,
+    };
+    return configs;
+  },
+  (err) => {
+    return Promise.reject(err);
+  },
+);
 
 export { http, httpAuth, source };
