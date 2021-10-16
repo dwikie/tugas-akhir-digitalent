@@ -1,4 +1,9 @@
 import { StatusPengajuan } from "../../../utils";
+import moment from "moment";
+
+// set locale moment to indonesia(id)
+import "moment/locale/id";
+moment.locale("id");
 
 const Columns = [
   {
@@ -9,9 +14,9 @@ const Columns = [
   },
   {
     title: "Tanggal Pengajuan",
-    dataIndex: "tanggalPengajuan",
+    dataIndex: "CreatedAt",
     key: "tanggalPengajuan",
-    render: () => "Senin, 23 Agustus",
+    render: (value) => moment(value).format("dddd, D MMMM YYYY"),
   },
   {
     title: "Nama",
@@ -28,9 +33,9 @@ const Columns = [
   },
   {
     title: "Rekomendasi",
-    dataIndex: "rekomendasi",
+    dataIndex: "Rekomendasi",
     key: "rekomendasi",
-    render: () => "Iya",
+    // render: () => "Iya",
   },
 ];
 

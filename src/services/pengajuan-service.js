@@ -12,7 +12,8 @@ export function getAll(page = 1, offset = 10) {
           .then(
             (res) => {
               try {
-                let result = res.data.result;
+                let result = res.data;
+                if (typeof res.data.result === "string") result = JSON.parse(res.data);
                 resolve(result);
               } catch (err) {
                 reject(err);
