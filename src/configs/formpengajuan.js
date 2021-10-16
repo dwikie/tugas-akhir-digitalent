@@ -1,29 +1,33 @@
 import { httpAuth } from "./axios-instances";
 
 export function FormPengajuan({
-  nik,
-  nama_lengkap,
-  tempat_lahir,
-  tanggal_lahir,
-  alamat,
-  pekerjaan,
-  pendapatan_perbulan,
-  bukti_ktp,
+  Nik,
+  NamaLengkap,
+  TempatLahir,
+  TanggalLahir,
+  Alamat,
+  Pekerjaan,
+  PendapatanPerbulan,
+  // file_ktp,
+  // file_gaji,
 }) {
   return new Promise(async (resolve, reject) => {
     return await httpAuth
-      .post("buat_pengajuan", {
-        nik,
-        nama_lengkap,
-        tempat_lahir,
-        tanggal_lahir,
-        alamat,
-        pekerjaan,
-        pendapatan_perbulan,
-        bukti_ktp,
+      .post("/submission", {
+        Nik,
+        NamaLengkap,
+        TempatLahir,
+        TanggalLahir,
+        Alamat,
+        Pekerjaan,
+        PendapatanPerbulan: parseInt(PendapatanPerbulan),
+        // file_gaji,
+        // file_ktp,
       })
       .then(
-        (res) => resolve({ ...res.data }),
+        (res) => {
+          resolve({ ...res.data });
+        },
         (err) => reject(err),
       );
   });
