@@ -7,34 +7,34 @@ import DisplayRow from "../DisplayRow";
 export default function DisplayPengajuanKPR({ data, showStatus }) {
   return (
     <Col>
-      <DisplayRow data={{ label: "NIK", value: data?.nik }} />
-      <DisplayRow data={{ label: "Nama Lengkap", value: data?.nama_lengkap }} />
+      <DisplayRow data={{ label: "NIK", value: data?.Nik }} />
+      <DisplayRow data={{ label: "Nama Lengkap", value: data?.NamaLengkap }} />
       <DisplayRow
         data={{
           label: "Tempat, Tanggal Lahir",
           value:
             data &&
-            data?.tempat_lahir &&
-            data?.tanggal_lahir &&
-            `${data?.tempat_lahir}, ${DateToLocale(data?.tanggal_lahir, {
+            data?.TempatLahir &&
+            data?.TanggalLahir &&
+            `${data?.TempatLahir}, ${DateToLocale(data?.TanggalLahir, {
               locale: "id-ID",
               timeZone: "Asia/Jakarta",
             })}`,
         }}
       />
-      <DisplayRow data={{ label: "Alamat", value: data?.alamat }} />
-      <DisplayRow data={{ label: "Pekerjaan", value: data?.pekerjaan }} />
+      <DisplayRow data={{ label: "Alamat", value: data?.Alamat }} />
+      <DisplayRow data={{ label: "Pekerjaan", value: data?.Pekerjaan }} />
       <DisplayRow
         data={{
           label: "Pendapatan Perbulan",
-          value: data?.pendapatan_perbulan,
+          value: data?.PendapatanPerbulan,
         }}
       />
       <DisplayRow
         data={{
           label: "Bukti Selfie KTP",
-          value: data?.bukti_ktp && (
-            <Typography.Link href={data?.bukti_ktp}>
+          value: data?.BuktiKtp && (
+            <Typography.Link href={data?.BuktiKtp}>
               File Slip KTP
             </Typography.Link>
           ),
@@ -43,8 +43,8 @@ export default function DisplayPengajuanKPR({ data, showStatus }) {
       <DisplayRow
         data={{
           label: "Bukti Slip Gaji",
-          value: data?.bukti_gaji && (
-            <Typography.Link href={data?.bukti_gaji}>
+          value: data?.SlipGaji && (
+            <Typography.Link href={data?.SlipGaji}>
               File Slip Gaji
             </Typography.Link>
           ),
@@ -54,10 +54,10 @@ export default function DisplayPengajuanKPR({ data, showStatus }) {
         <DisplayRow
           data={{
             label: "Status Verifikasi",
-            value: data?.status && (
+            value: data?.Status && (
               <Badge
-                status={StatusPengajuan(data?.status).status}
-                text={StatusPengajuan(data?.status).detail}
+                status={StatusPengajuan(data?.Status).status}
+                text={StatusPengajuan(data?.Status).detail}
               />
             ),
           }}
