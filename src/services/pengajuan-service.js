@@ -12,8 +12,7 @@ export function getAll(page = 1, offset = 10) {
           .then(
             (res) => {
               try {
-                let result = res.data;
-                if (typeof res.data === "string") result = JSON.parse(res.data);
+                let result = res.data.result;
                 resolve(result);
               } catch (err) {
                 reject(err);
@@ -48,7 +47,37 @@ export function getById(idCustomer) {
             (res) => {
               try {
                 let result = res.data;
-                if (typeof res.data === "string") result = JSON.parse(res.data);
+                resolve(result);
+              } catch (err) {
+                reject(err);
+              }
+            },
+            (err) => {
+              reject(err);
+            },
+          )
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    cancel: cancelSource.cancel,
+  };
+}
+
+export function getCustomerSubmission() {
+  const cancelSource = source();
+  return {
+    start: function () {
+      return new Promise(async (resolve, reject) => {
+        return await httpAuth
+          .get("/customer_submission", {
+            cancelToken: cancelSource.token,
+          })
+          .then(
+            (res) => {
+              try {
+                let result = res.data;
                 resolve(result);
               } catch (err) {
                 reject(err);
