@@ -2,24 +2,24 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Alert, Table, Skeleton } from "antd";
 import { useHistory, useLocation } from "react-router";
 
-// Render dummy data sebanyak 50
-const peoples = [];
-for (let i = 1; i <= 50; i++) {
-  peoples.push({
-    alamat: "Bojongsoang no.180 Bandung",
-    bukti_gaji: "798735247/files/doc_downloads/test.pdf",
-    bukti_ktp: "798735247/files/doc_downloads/test.pdf",
-    id_cust: i,
-    id_pengajuan: i,
-    nama_lengkap: `${i} Nama Orang`,
-    nik: "12345678910",
-    pekerjaan: "Seniman",
-    pendapatan_perbulan: 5000000,
-    status: 3,
-    tanggal_lahir: "07/08/1980",
-    tempat_lahir: "Bandung",
-  });
-}
+// // Render dummy data sebanyak 50
+// const peoples = [];
+// for (let i = 1; i <= 50; i++) {
+//   peoples.push({
+//     alamat: "Bojongsoang no.180 Bandung",
+//     bukti_gaji: "798735247/files/doc_downloads/test.pdf",
+//     bukti_ktp: "798735247/files/doc_downloads/test.pdf",
+//     id_cust: i,
+//     id_pengajuan: i,
+//     NamaLengkap: `${i} Nama Orang`,
+//     nik: "12345678910",
+//     pekerjaan: "Seniman",
+//     pendapatan_perbulan: 5000000,
+//     Status: 3,
+//     tanggal_lahir: "07/08/1980",
+//     tempat_lahir: "Bandung",
+//   });
+// }
 
 export default function TableDaftarPengajuan({
   data,
@@ -50,9 +50,6 @@ export default function TableDaftarPengajuan({
     getPaginationId();
   }, [getPaginationId]);
 
-  // console.log(idPage);
-  // console.log("ini search", search);
-
   return (
     <>
       {error ? (
@@ -70,7 +67,6 @@ export default function TableDaftarPengajuan({
           pageSize: isPageSize,
           current: !search ? 1 : isPage,
           onChange: (page, pageSize) => {
-            // push(`/dashboard/pengajuan?page=${page}`)
             push({
               pathname: "/dashboard/pengajuan",
               search: `?page=${page}`,

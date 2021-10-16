@@ -31,8 +31,8 @@ export default function DaftarPengajuan() {
   const getPengajuan = useCallback(async () => {
     setIsTableLoading(true);
     try {
-      const data = await service.start();
-      setTableData(data);
+      const { result } = await service.start();
+      setTableData(result);
       setIsTableLoading(false);
     } catch (error) {
       setTableError(error.message);
