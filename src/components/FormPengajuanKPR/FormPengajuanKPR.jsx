@@ -3,6 +3,7 @@ import DisplayRow from "../DisplayRow";
 import { Button, Col, DatePicker, Form, Input, Row, Upload, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { FormPengajuan } from "../../configs/formpengajuan";
+import { FileToBase64String, DateConversion } from "../../utils";
 
 export default function FormPengajuanKPR() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +25,14 @@ export default function FormPengajuanKPR() {
 
   const onFinish = async (value) => {
     setIsLoading(true);
-    return await FormPengajuan(value).then(
+    const data = {
+      ...value,
+      tanggal_lahir: DateConversion.MomentToISOString(value.tanggal_lahir),
+      file_gaji: await FileToBase64String(value.file_gaji[0].originFileObj),
+      file_ktp: await FileToBase64String(value.file_ktp[0].originFileObj),
+    };
+    
+    return await FormPengajuan(data).then(
       (res) => {
         setIsLoading(false);
         form.resetFields();

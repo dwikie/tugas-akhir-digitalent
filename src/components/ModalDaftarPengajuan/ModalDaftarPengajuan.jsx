@@ -85,7 +85,7 @@ export default function ModalDaftarPengajuan({
                 </View>
               </View>
               {/* tbody */}
-              {data.map((pengajuan, index) => (
+              {Array.from(data).map((pengajuan, index) => (
                 <View style={reportStyle.tableBody}>
                   <View style={{ ...reportStyle.tableBodyRow, width: "6%" }}>
                     <Text style={reportStyle.tableBodyCell}>{index + 1}</Text>
