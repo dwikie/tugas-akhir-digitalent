@@ -114,3 +114,17 @@
   color: rgb(97, 97, 97);
   font-size: 0.83em;
 }
+
+.ant-alert-message > b {
+  font-size: 0.93em;
+}
+
+.display-container > .ant-col > .ant-row {
+  flex-wrap: nowrap;
+}
+
+@media screen and (max-width: 575px) {
+  .display-container > .ant-col > .ant-row {
+    flex-wrap: wrap;
+  }
+}

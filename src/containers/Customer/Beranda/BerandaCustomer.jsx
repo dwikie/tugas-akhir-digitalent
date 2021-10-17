@@ -1,45 +1,41 @@
 import { Button, Col, Empty, Row } from "antd";
-import { CaretRightFilled } from "@ant-design/icons";
-import React, { useState } from "react";
-import Title from "../../../components/Title";
+import { CaretRightFilled, ProfileOutlined } from "@ant-design/icons";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR";
 import DisplayKelengkapanDokumen from "../../../components/DisplayKelengkapanDokumen";
 import { useHistory, useRouteMatch } from "react-router";
-import { getCustomerSubmission } from "../../../services/pengajuan-service";
+import { GetCustomerSubmission } from "../../../services/pengajuan-service";
 
 export default function BerandaCustomer() {
-  const [detailPengajuan, setDetailPengajuan] = useState(null);
-  const [kelengkapanDokumen] = useState(null);
+  const [detailPengajuan, setDetailPengajuan] = useState({});
+  const service = useMemo(() => GetCustomerSubmission(), []);
 
   const { push } = useHistory();
   const { url } = useRouteMatch();
 
-  useState(() => {
-    async function getDetail() {
-      const { result } = await getCustomerSubmission().start();
+  const getDetail = useCallback(async () => {
+    try {
+      const { result } = await service.start();
       setDetailPengajuan(result);
-      console.log(result);
+    } catch (err) {
+      setDetailPengajuan(null);
     }
+  }, [service]);
+
+  useEffect(() => {
     getDetail();
-  }, []);
+    return () => {
+      service.cancel();
+      setDetailPengajuan(null);
+    };
+  }, [service, getDetail]);
 
   return detailPengajuan ? (
     <Row gutter={[16, 12]} style={{ flexDirection: "column" }}>
-      <Title title="Data Diri" />
-      <section
-        className="container"
-        id="data-diri"
-        style={{ whiteSpace: "nowrap" }}
-      >
-        <DisplayPengajuanKPR data={detailPengajuan} showStatus />
-      </section>
+      <DisplayPengajuanKPR data={detailPengajuan} showStatus />
       <Col>
         <Row justify="end">
-          {/* 
-        LENGKAPI DOKUMEN PENDUKUNG jika data diri TELAH DIVERIFIKASI dan DITERIMA oleh admin
-        dan RESET DATA DIRI jika pengajuan data diri DITOLAK oleh admin  
-      */}
-          {detailPengajuan?.Status === 3 && !detailPengajuan.CompleteDoc?.ID && (
+          {detailPengajuan?.Status === 3 && !detailPengajuan.CompleteDoc?.ID ? (
             <Button
               icon={<CaretRightFilled />}
               type={"primary"}
@@ -47,23 +43,39 @@ export default function BerandaCustomer() {
             >
               Lengkapi Dokumen Pendukung
             </Button>
-          )}
+          ) : null}
+          {detailPengajuan?.Status === 2 ? (
+            <Button
+              icon={<ProfileOutlined />}
+              type={"primary"}
+              danger
+              onClick={() => push(`${url}/dokumen-tambahan`)}
+            >
+              Reset Data Diri
+            </Button>
+          ) : null}
         </Row>
       </Col>
       {detailPengajuan?.Status === 3 && detailPengajuan.CompleteDoc?.ID ? (
         <>
-          <Title title="Kelengkapan Data KPR" />
-          <section
-            className="container"
-            id="kelengkapan-data-kpr"
-            style={{ whiteSpace: "pre-wrap" }}
-          >
-            <DisplayKelengkapanDokumen data={kelengkapanDokumen} showStatus />
-          </section>
+          <DisplayKelengkapanDokumen
+            data={detailPengajuan.CompleteDoc}
+            showStatus
+          />
+          {detailPengajuan.CompleteDoc?.Status === 2 ? (
+            <Button
+              icon={<ProfileOutlined />}
+              type={"primary"}
+              danger
+              onClick={() => push(`${url}/dokumen-tambahan`)}
+            >
+              Reset Pengajuan KPR
+            </Button>
+          ) : null}
         </>
       ) : null}
     </Row>
   ) : (
-    <Empty description="Belum membuat Pengajuan" />
+    <Empty description="Belum Membuat Pengajuan" />
   );
 }
