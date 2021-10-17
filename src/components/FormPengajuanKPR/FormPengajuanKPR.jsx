@@ -2,6 +2,7 @@ import React from "react";
 import DisplayRow from "../DisplayRow";
 import { Button, Col, DatePicker, Form, Input, Row, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { FileToBase64String, DateConversion } from "../../utils";
 
 export default function FormPengajuanKPR() {
   const normFile = (e) => {
@@ -17,8 +18,15 @@ export default function FormPengajuanKPR() {
     }, 0);
   };
 
-  const onFinish = (value) => {
-    console.log(value);
+  const onFinish = async (value) => {
+    const data = {
+      ...value,
+      tanggal_lahir: DateConversion.MomentToISOString(value.tanggal_lahir),
+      file_gaji: await FileToBase64String(value.file_gaji[0].originFileObj),
+      file_ktp: await FileToBase64String(value.file_ktp[0].originFileObj),
+    };
+
+    console.log(data);
   };
 
   return (
