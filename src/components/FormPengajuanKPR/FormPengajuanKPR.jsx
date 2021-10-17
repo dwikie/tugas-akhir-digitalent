@@ -16,7 +16,7 @@ export default function FormPengajuanKPR() {
     return e && e.fileList;
   };
 
-  const dummyRequest = ({ file, onSuccess }) => {
+  const dummyRequest = ({ onSuccess }) => {
     setTimeout(() => {
       onSuccess("ok");
     }, 0);
@@ -33,8 +33,7 @@ export default function FormPengajuanKPR() {
         BuktiKtp: await FileToBase64String(value.BuktiKtp[0].originFileObj),
         PendapatanPerbulan: parseInt(value.PendapatanPerbulan),
       };
-      const request = await CreateSubmission(data).start();
-      console.log(request);
+      await CreateSubmission(data).start();
       form.resetFields();
       setResponse({
         message: "Data anda telah berhasil diajukan.",
@@ -42,51 +41,32 @@ export default function FormPengajuanKPR() {
       });
     } catch (err) {
       setIsLoading(false);
-      switch (err.message.status) {
+      switch (err.response.status) {
         case 400:
           setResponse({
-            message: "Data yang anda masukkan sudah ada!",
+            message: (
+              <>
+                <b>No. Induk KTP</b> yang anda masukkan sudah terdaftar
+              </>
+            ),
             type: "error",
           });
           form.getFieldInstance("Nik").focus();
           break;
+        case 500:
+          setResponse({
+            message: "Internal Server Error",
+            type: "error",
+          });
+          break;
         default:
           setResponse({
-            message: `Terjadi kesalahan: ${err.message}`,
+            message: `Terjadi Kesalahan: ${err.message}`,
             type: "error",
           });
           break;
       }
     }
-
-    // return await FormPengajuan(value).then(
-    //   (res) => {
-    //     setIsLoading(false);
-    //     form.resetFields();
-    //     setResponse({
-    //       message: "Data anda telah berhasil diajukan.",
-    //       type: "success",
-    //     });
-    //   },
-    //   (err) => {
-    //     setIsLoading(false);
-    //     switch (err.response.status) {
-    //       case 400:
-    //         setResponse({
-    //           message: "Data yang anda masukkan sudah ada!",
-    //           type: "error",
-    //         });
-    //         form.getFieldInstance("Nik").focus();
-    //         break;
-    //       default:
-    //         setResponse({
-    //           message: `Terjadi kesalahan: ${err.message}`,
-    //           type: "error",
-    //         });
-    //         break;
-    //     }
-    //   },
-    // );
   };
 
   return (
@@ -101,7 +81,7 @@ export default function FormPengajuanKPR() {
           afterClose={() => setResponse(null)}
         />
       )}
-      <Form onFinish={onFinish}>
+      <Form onFinish={onFinish} form={form}>
         <DisplayRow
           data={{
             label: "No. Induk KTP",
