@@ -9,6 +9,7 @@ export default function FormPengajuanKPR() {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [form] = Form.useForm();
+
   const normFile = (e) => {
     if (Array.isArray(e)) {
       return e;
@@ -22,7 +23,7 @@ export default function FormPengajuanKPR() {
     }, 0);
   };
 
-  const onFinish = async (value) => {
+    const onFinish = async (value) => {
     setIsLoading(true);
 
     try {
@@ -69,7 +70,7 @@ export default function FormPengajuanKPR() {
     }
   };
 
-  return (
+   return (
     <>
       {response && (
         <Alert
