@@ -3,8 +3,6 @@ name: e2e Cypress
 on:
   pull_request:
     branches:
-      - main
-      - master
       - development
 
 jobs:

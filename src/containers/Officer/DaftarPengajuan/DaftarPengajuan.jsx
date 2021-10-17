@@ -59,8 +59,8 @@ export default function DaftarPengajuan() {
   const showModal = async () => {
     try {
       setModalVisibility(true);
-      const data = await service.start();
-      setReportData(data);
+      const { result } = await service.start();
+      setReportData(result);
     } catch {
       service.cancel();
       setReportData([]);
