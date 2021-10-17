@@ -13,7 +13,8 @@ export function getAll(page = 1, offset = 10) {
             (res) => {
               try {
                 let result = res.data;
-                if (typeof res.data.result === "string") result = JSON.parse(res.data);
+                if (typeof res.data.result === "string")
+                  result = JSON.parse(res.data);
                 resolve(result);
               } catch (err) {
                 reject(err);
@@ -66,7 +67,7 @@ export function getById(idCustomer) {
   };
 }
 
-export function getCustomerSubmission() {
+export function GetCustomerSubmission() {
   const cancelSource = source();
   return {
     start: function () {
@@ -111,6 +112,37 @@ export function getAdditionalDocument(idSubmission) {
               try {
                 let result = res.data;
                 if (typeof res.data === "string") result = JSON.parse(res.data);
+                resolve(result);
+              } catch (err) {
+                reject(err);
+              }
+            },
+            (err) => {
+              reject(err);
+            },
+          )
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    cancel: cancelSource.cancel,
+  };
+}
+
+export function CreateSubmission(submission) {
+  const cancelSource = source();
+  return {
+    start: function () {
+      return new Promise(async (resolve, reject) => {
+        return await httpAuth
+          .post("/submission", submission, {
+            cancelToken: cancelSource.token,
+          })
+          .then(
+            (res) => {
+              try {
+                let result = res.data;
                 resolve(result);
               } catch (err) {
                 reject(err);
