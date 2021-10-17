@@ -1,27 +1,36 @@
 import { Button, Col, Empty, Row } from "antd";
 import { CaretRightFilled } from "@ant-design/icons";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Title from "../../../components/Title";
 import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR";
 import DisplayKelengkapanDokumen from "../../../components/DisplayKelengkapanDokumen";
 import { useHistory, useRouteMatch } from "react-router";
-import { getCustomerSubmission } from "../../../services/pengajuan-service";
+import { GetCustomerSubmission } from "../../../services/pengajuan-service";
 
 export default function BerandaCustomer() {
   const [detailPengajuan, setDetailPengajuan] = useState(null);
   const [kelengkapanDokumen] = useState(null);
+  const service = useMemo(() => GetCustomerSubmission(), []);
 
   const { push } = useHistory();
   const { url } = useRouteMatch();
 
-  useState(() => {
-    async function getDetail() {
-      const { result } = await getCustomerSubmission().start();
+  const getDetail = useCallback(async () => {
+    try {
+      const { result } = await service.start();
       setDetailPengajuan(result);
-      console.log(result);
+    } catch (err) {
+      console.log(err);
     }
+  }, [service]);
+
+  useEffect(() => {
     getDetail();
-  }, []);
+    return () => {
+      service.cancel();
+      setDetailPengajuan(null);
+    };
+  }, [service, getDetail]);
 
   return detailPengajuan ? (
     <Row gutter={[16, 12]} style={{ flexDirection: "column" }}>
