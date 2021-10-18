@@ -1,6 +1,7 @@
 import { httpAuth, source } from "../configs/axios-instances";
+import { DateConversion, FileToBase64String } from "../utils";
 
-export function getAll(page = 1, offset = 10) {
+export function GetAllSubmission() {
   const cancelSource = source();
   return {
     start: function () {
@@ -98,47 +99,31 @@ export function GetCustomerSubmission() {
   };
 }
 
-export function getAdditionalDocument(idSubmission) {
-  const cancelSource = source();
-  return {
-    start: function () {
-      return new Promise(async (resolve, reject) => {
-        return await httpAuth
-          .get("kelengkapan_data", {
-            cancelToken: cancelSource.token,
-          })
-          .then(
-            (res) => {
-              try {
-                let result = res.data;
-                if (typeof res.data === "string") result = JSON.parse(res.data);
-                resolve(result);
-              } catch (err) {
-                reject(err);
-              }
-            },
-            (err) => {
-              reject(err);
-            },
-          )
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    },
-    cancel: cancelSource.cancel,
-  };
-}
-
 export function CreateSubmission(submission) {
   const cancelSource = source();
   return {
     start: function () {
       return new Promise(async (resolve, reject) => {
         return await httpAuth
-          .post("/submission", submission, {
-            cancelToken: cancelSource.token,
-          })
+          .post(
+            "/submission",
+            {
+              ...submission,
+              TanggalLahir: DateConversion.MomentToISOString(
+                submission.TanggalLahir,
+              ),
+              SlipGaji: await FileToBase64String(
+                submission.SlipGaji[0].originFileObj,
+              ),
+              BuktiKtp: await FileToBase64String(
+                submission.BuktiKtp[0].originFileObj,
+              ),
+              PendapatanPerbulan: parseInt(submission.PendapatanPerbulan),
+            },
+            {
+              cancelToken: cancelSource.token,
+            },
+          )
           .then(
             (res) => {
               try {
@@ -160,10 +145,3 @@ export function CreateSubmission(submission) {
     cancel: cancelSource.cancel,
   };
 }
-
-export default new (class ServicePengajuan {
-  constructor() {
-    this.getAll = getAll;
-    this.getById = getById;
-  }
-})();

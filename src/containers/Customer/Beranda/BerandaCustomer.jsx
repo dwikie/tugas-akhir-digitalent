@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR";
 import DisplayKelengkapanDokumen from "../../../components/DisplayKelengkapanDokumen";
 import { useHistory, useRouteMatch } from "react-router";
-import { GetCustomerSubmission } from "../../../services/pengajuan-service";
+import { GetCustomerSubmission } from "../../../services/SubmissionServices";
 
 export default function BerandaCustomer() {
   const [detailPengajuan, setDetailPengajuan] = useState({});
@@ -62,16 +62,20 @@ export default function BerandaCustomer() {
             data={detailPengajuan.CompleteDoc}
             showStatus
           />
-          {detailPengajuan.CompleteDoc?.Status === 2 ? (
-            <Button
-              icon={<ProfileOutlined />}
-              type={"primary"}
-              danger
-              onClick={() => push(`${url}/dokumen-tambahan`)}
-            >
-              Reset Pengajuan KPR
-            </Button>
-          ) : null}
+          <Col>
+            <Row justify="end">
+              {detailPengajuan.CompleteDoc?.Status === 2 ? (
+                <Button
+                  icon={<ProfileOutlined />}
+                  type={"primary"}
+                  danger
+                  onClick={() => push(`${url}/dokumen-tambahan`)}
+                >
+                  Reset Pengajuan KPR
+                </Button>
+              ) : null}
+            </Row>
+          </Col>
         </>
       ) : null}
     </Row>

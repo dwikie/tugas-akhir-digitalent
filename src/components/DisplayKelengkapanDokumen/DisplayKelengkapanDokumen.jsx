@@ -31,7 +31,11 @@ export default function DisplayKelengkapanDokumen({ data, showStatus }) {
           <DisplayRow
             data={{
               label: "Luas Tanah/Rumah",
-              value: data && `${data?.LuasRumah}m2`,
+              value: data && (
+                <>
+                  {data?.LuasRumah} m<sup>2</sup>
+                </>
+              ),
             }}
           />
           <DisplayRow

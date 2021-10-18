@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import {
   Button,
   Form,
@@ -11,13 +11,13 @@ import {
 } from "antd";
 import DisplayRow from "../DisplayRow";
 import { UploadOutlined } from "@ant-design/icons";
-import { PostAdditionalDocument } from "../../services/kelengkapan-dokumen";
-import { getCustomerSubmission } from "../../services/pengajuan-service";
+import { GetCustomerSubmission } from "../../services/SubmissionServices";
+import { CreateAdditionalDocument } from "../../services/AdditionalDocumentServices";
 
 export default function FormKelengkapanDokumen() {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
-  const [submissionID, setSubmissionID] = useState();
+  const [submissionID, setSubmissionID] = useState(null);
   const [form] = Form.useForm();
 
   const normFile = (e) => {
@@ -27,51 +27,56 @@ export default function FormKelengkapanDokumen() {
     return e && e.fileList;
   };
 
-  const dummyRequest = ({ file, onSuccess }) => {
+  const dummyRequest = ({ onSuccess }) => {
     setTimeout(() => {
       onSuccess("ok");
     }, 0);
   };
 
+  const getUserSubmission = useMemo(() => GetCustomerSubmission(), []);
+  const getSubmissionID = useCallback(async () => {
+    const { result } = await getUserSubmission.start();
+    setSubmissionID(result.ID);
+  }, [getUserSubmission]);
+
   useEffect(() => {
-    const getSubmissionID = async () => {
-      const { result } = await getCustomerSubmission().start();
-      setSubmissionID(result.ID);
-    };
     getSubmissionID();
-  });
+    return () => {
+      getUserSubmission.cancel();
+      setSubmissionID(undefined);
+    };
+  }, [getUserSubmission, getSubmissionID]);
 
   const onFinish = async (value) => {
     setIsLoading(true);
-    return await PostAdditionalDocument({ ...value, submissionID })
-      .start()
-      .then(
-        (res) => {
-          setIsLoading(false);
-          form.resetFields();
+    try {
+      await CreateAdditionalDocument({
+        ...value,
+        SubmissionID: submissionID,
+      }).start();
+      setIsLoading(false);
+      form.resetFields();
+      setResponse({
+        message: "Data anda telah berhasil diajukan.",
+        type: "success",
+      });
+    } catch (err) {
+      setIsLoading(false);
+      switch (err.response.status) {
+        case 400:
           setResponse({
-            message: "Data anda telah berhasil diajukan.",
-            type: "success",
+            message: "Data yang anda masukkan sudah ada!",
+            type: "error",
           });
-        },
-        (err) => {
-          setIsLoading(false);
-          switch (err.response.status) {
-            case 400:
-              setResponse({
-                message: "Data yang anda masukkan sudah ada!",
-                type: "error",
-              });
-              break;
-            default:
-              setResponse({
-                message: `Terjadi kesalahan: ${err.message}`,
-                type: "error",
-              });
-              break;
-          }
-        },
-      );
+          break;
+        default:
+          setResponse({
+            message: `Terjadi kesalahan: ${err.message}`,
+            type: "error",
+          });
+          break;
+      }
+    }
   };
 
   return (
@@ -92,7 +97,7 @@ export default function FormKelengkapanDokumen() {
             label: "Alamat Rumah",
             value: (
               <Form.Item
-                name="alamat_rumah"
+                name="AlamatRumah"
                 rules={[
                   {
                     required: true,
@@ -100,7 +105,7 @@ export default function FormKelengkapanDokumen() {
                   },
                 ]}
               >
-                <Input name="alamat_rumah" placeholder="Alamat Rumah" />
+                <Input name="AlamatRumah" placeholder="Alamat Rumah" />
               </Form.Item>
             ),
           }}
@@ -117,7 +122,7 @@ export default function FormKelengkapanDokumen() {
             ),
             value: (
               <Form.Item
-                name="luas_tanah"
+                name="LuasRumah"
                 rules={[
                   {
                     required: true,
@@ -126,7 +131,7 @@ export default function FormKelengkapanDokumen() {
                 ]}
               >
                 <InputNumber
-                  name="luas_tanah"
+                  name="LuasRumah"
                   placeholder="Luas Tanah"
                   style={{ width: "100%" }}
                 />
@@ -139,7 +144,7 @@ export default function FormKelengkapanDokumen() {
             label: "Harga Rumah",
             value: (
               <Form.Item
-                name="harga_rumah"
+                name="HargaRumah"
                 rules={[
                   {
                     required: true,
@@ -148,7 +153,7 @@ export default function FormKelengkapanDokumen() {
                 ]}
               >
                 <InputNumber
-                  name="harga_rumah"
+                  name="HargaRumah"
                   placeholder="Harga Rumah"
                   style={{ width: "100%" }}
                 />
@@ -161,7 +166,7 @@ export default function FormKelengkapanDokumen() {
             label: "Jangka Pembayaran",
             value: (
               <Form.Item
-                name="jangka_pembayaran_thn"
+                name="JangkaPembayaran"
                 rules={[
                   {
                     required: true,
@@ -170,7 +175,7 @@ export default function FormKelengkapanDokumen() {
                 ]}
               >
                 <Select
-                  name="jangka_pembayaran_thn"
+                  name="JangkaPembayaran"
                   placeholder="- Pilih Jangka Pembayaran -"
                 >
                   <Select.Option value="12">1 Tahun</Select.Option>
@@ -186,12 +191,12 @@ export default function FormKelengkapanDokumen() {
             label: "Dokumen Pendukung",
             value: (
               <Form.Item
-                name="dokumen_pendukung"
+                name="DokumenPendukung"
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
               >
                 <Upload.Dragger
-                  name="dokumen_pendukung"
+                  name="DokumenPendukung"
                   multiple={false}
                   customRequest={dummyRequest}
                   accept=".PDF"
@@ -208,7 +213,12 @@ export default function FormKelengkapanDokumen() {
           }}
         />
         <Row justify="end">
-          <Button type="primary" htmlType="submit" loading={isLoading}>
+          <Button
+            type="primary"
+            style={{ display: "flex", alignItems: "center" }}
+            htmlType="submit"
+            loading={isLoading}
+          >
             Submit Pengajuan
           </Button>
         </Row>
