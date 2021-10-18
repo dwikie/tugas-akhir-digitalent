@@ -7,9 +7,9 @@ export default function StatusPengajuan(status) {
     case 2:
       return { status: "error", detail: "Ditolak" };
     case 3:
-      return { status: "success", detail: "Disetujui" };
+      return { status: "success", detail: "Terverifikasi" };
     case 4:
-      return { status: "success", detail: "Selesai" };
+      return { status: "success", detail: "Disetujui" };
     default:
       throw RangeError(`Status ${status} tidak ditemukan`);
   }

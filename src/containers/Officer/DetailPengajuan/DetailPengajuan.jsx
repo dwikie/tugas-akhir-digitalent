@@ -1,7 +1,7 @@
 import { Col, Divider, Row, Typography } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR/DisplayPengajuanKPR";
-import { getById } from "../../../services/pengajuan-service";
+import { getById } from "../../../services/SubmissionServices";
 import { useRouteMatch } from "react-router-dom";
 
 export default function DetailPengajuan() {

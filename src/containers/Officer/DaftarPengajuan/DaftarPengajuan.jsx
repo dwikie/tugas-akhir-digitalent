@@ -5,7 +5,7 @@ import Title from "../../../components/Title";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useHistory, useRouteMatch } from "react-router";
 import DaftarPengajuanTable from "../../../components/DaftarPengajuanTable";
-import { getAll } from "../../../services/pengajuan-service";
+import { GetAllSubmission } from "../../../services/SubmissionServices";
 import Columns from "./TableColumns";
 import ModalDaftarPengajuan from "../../../components/ModalDaftarPengajuan";
 import ReportStyle from "./ReportStyle";
@@ -25,7 +25,7 @@ export default function DaftarPengajuan() {
   // const [page, setPage] = useState(() =>
   //   isNaN(initialPage.current) ? 1 : parseInt(initialPage.current),
   // );
-  const service = useMemo(() => getAll(1, 10), []);
+  const service = useMemo(() => GetAllSubmission(), []);
   const breakPoint = useBreakpoint();
 
   const getPengajuan = useCallback(async () => {

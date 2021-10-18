@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import DisplayRow from "../DisplayRow";
 import { Button, Col, DatePicker, Form, Input, Row, Upload, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { CreateSubmission } from "../../services/pengajuan-service";
-import { FileToBase64String, DateConversion } from "../../utils";
+import { CreateSubmission } from "../../services/SubmissionServices";
 
 export default function FormPengajuanKPR() {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,18 +22,11 @@ export default function FormPengajuanKPR() {
     }, 0);
   };
 
-    const onFinish = async (value) => {
+  const onFinish = async (value) => {
     setIsLoading(true);
 
     try {
-      const data = {
-        ...value,
-        TanggalLahir: DateConversion.MomentToISOString(value.TanggalLahir),
-        SlipGaji: await FileToBase64String(value.SlipGaji[0].originFileObj),
-        BuktiKtp: await FileToBase64String(value.BuktiKtp[0].originFileObj),
-        PendapatanPerbulan: parseInt(value.PendapatanPerbulan),
-      };
-      await CreateSubmission(data).start();
+      await CreateSubmission(value).start();
       form.resetFields();
       setResponse({
         message: "Data anda telah berhasil diajukan.",
@@ -70,7 +62,7 @@ export default function FormPengajuanKPR() {
     }
   };
 
-   return (
+  return (
     <>
       {response && (
         <Alert
