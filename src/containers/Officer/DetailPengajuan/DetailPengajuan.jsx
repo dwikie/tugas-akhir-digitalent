@@ -1,37 +1,67 @@
-import { Col, Divider, Row, Typography } from "antd";
+import { Col, Empty, Row } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR/DisplayPengajuanKPR";
-import { getById } from "../../../services/SubmissionServices";
+import { GetSubmissionById } from "../../../services/SubmissionServices";
 import { useRouteMatch } from "react-router-dom";
+import FormVerifikasiPengajuanKPR from "../../../components/FormVerifikasiPengajuanKPR";
+import DisplayKelengkapanDokumen from "../../../components/DisplayKelengkapanDokumen";
+import FormVerifikasiKelengkapanDokumen from "../../../components/FormVerifikasiKelengkapanDokumen";
 
 export default function DetailPengajuan() {
   const { params } = useRouteMatch();
-  const [detail, setDetail] = useState({});
+  const [submission, setSubmission] = useState({});
 
-  const service = useMemo(() => getById(params.id), [params.id]);
+  const service = useMemo(() => GetSubmissionById(params.id), [params.id]);
 
-  const populateDetailPengajuan = useCallback(async () => {
-    const { data } = await service.start();
-    setDetail(data);
-    console.log(data);
+  const getSubmission = useCallback(async () => {
+    try {
+      const { result } = await service.start();
+      setSubmission(result);
+    } catch (err) {
+      setSubmission(null);
+    }
   }, [service]);
 
   useEffect(() => {
-    populateDetailPengajuan();
+    getSubmission();
     return () => service.cancel();
-  }, [populateDetailPengajuan, service]);
+  }, [getSubmission, service]);
 
   return (
     <Row gutter={[0, 12]} style={{ flexDirection: "column" }}>
-      <Col>
-        <Typography.Title level={5} style={{ textAlign: "center" }}>
-          Data Diri Pengaju
-        </Typography.Title>
-        <Divider />
-      </Col>
-      <section style={{ whiteSpace: "nowrap" }} className="container">
-        <DisplayPengajuanKPR data={detail} showStatus />
-      </section>
+      {submission ? (
+        <>
+          <Col>
+            <DisplayPengajuanKPR
+              data={submission}
+              showStatus={submission?.Status !== 1}
+            />
+            {submission?.Status === 1 ? (
+              <FormVerifikasiPengajuanKPR
+                idSubmission={params.id}
+                updateSubmission={getSubmission}
+              />
+            ) : null}
+          </Col>
+
+          {submission?.CompleteDoc?.ID ? (
+            <Col>
+              <DisplayKelengkapanDokumen
+                data={submission?.CompleteDoc}
+                showStatus={submission?.CompleteDoc?.Status !== 1}
+              />
+              {submission?.CompleteDoc?.Status === 1 ? (
+                <FormVerifikasiKelengkapanDokumen
+                  idAdditionalDocument={submission?.CompleteDoc?.ID}
+                  updateSubmission={getSubmission}
+                />
+              ) : null}
+            </Col>
+          ) : null}
+        </>
+      ) : (
+        <Empty description="Pengajuan tidak ditemukan" />
+      )}
     </Row>
   );
 }
