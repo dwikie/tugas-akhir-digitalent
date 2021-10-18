@@ -34,16 +34,13 @@ export function GetAllSubmission() {
   };
 }
 
-export function getById(idCustomer) {
+export function GetSubmissionById(idSubmission) {
   const cancelSource = source();
   return {
     start: function () {
       return new Promise(async (resolve, reject) => {
         return await httpAuth
-          .get("pengajuan", {
-            params: {
-              id_customer: idCustomer,
-            },
+          .get(`/submission/${idSubmission}`, {
             cancelToken: cancelSource.token,
           })
           .then(
@@ -76,6 +73,37 @@ export function GetCustomerSubmission() {
         return await httpAuth
           .get("/customer_submission", {
             cancelToken: cancelSource.token,
+          })
+          .then(
+            (res) => {
+              try {
+                let result = res.data;
+                resolve(result);
+              } catch (err) {
+                reject(err);
+              }
+            },
+            (err) => {
+              reject(err);
+            },
+          )
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    cancel: cancelSource.cancel,
+  };
+}
+
+export function VerifySubmission(idSubmission, { Status }) {
+  const cancelSource = source();
+  return {
+    start: function () {
+      return new Promise(async (resolve, reject) => {
+        return await httpAuth
+          .put(`/submission/${idSubmission}`, {
+            Status: parseInt(Status),
           })
           .then(
             (res) => {

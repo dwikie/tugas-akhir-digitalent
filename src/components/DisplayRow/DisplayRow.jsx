@@ -4,7 +4,7 @@ import { Row, Col, Skeleton } from "antd";
 export default function DisplayRow({ data }) {
   return (
     <Row gutter={[8, 4]} style={{ marginBottom: ".5rem" }}>
-      <Col xs={10} sm={8} md={6} lg={5} xl={4} xxl={3}>
+      <Col xs={14} sm={8} md={6} lg={5} xl={4} xxl={3}>
         {data?.value ? (
           <span style={{ fontWeight: "bold" }}>{data.label}</span>
         ) : (

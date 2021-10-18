@@ -47,3 +47,34 @@ export function CreateAdditionalDocument({
     cancel: cancelSource.cancel,
   };
 }
+
+export function VerifyAdditionalDocument(idAdditionalDocument, { Status }) {
+  const cancelSource = source();
+  return {
+    start: function () {
+      return new Promise(async (resolve, reject) => {
+        return await httpAuth
+          .put(`/completedoc/${idAdditionalDocument}`, {
+            Status: parseInt(Status),
+          })
+          .then(
+            (res) => {
+              try {
+                let result = res.data;
+                resolve(result);
+              } catch (err) {
+                reject(err);
+              }
+            },
+            (err) => {
+              reject(err);
+            },
+          )
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    cancel: cancelSource.cancel,
+  };
+}
