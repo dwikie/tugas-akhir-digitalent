@@ -68,9 +68,20 @@ export default function FormRegister() {
               required: true,
               message: "Mohon masukkan username",
             },
+            () => ({
+              validator(_, value) {
+                if (value.length <= 10) {
+                  return Promise.resolve();
+                }
+
+                return Promise.reject(
+                  new Error("Username maksimal 10 karakter"),
+                );
+              },
+            }),
           ]}
         >
-          <Input size="large" placeholder="Username" name="username" />
+          <Input size="large" max="10" placeholder="Username" name="username" />
         </Form.Item>
 
         <Form.Item

@@ -49,7 +49,6 @@ export default function FormLogin() {
         onFinish={handleOnFinish}
         className="mt-4"
         layout="vertical"
-        autoComplete="off"
         requiredMark="optional"
       >
         <Form.Item
