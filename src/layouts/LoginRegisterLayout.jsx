@@ -35,13 +35,13 @@ export default function LoginRegisterLayout({ type, banner, title, form }) {
               </Link>
             </div>
           )}
-          <div className="h-11/12 w-full flex flex-col justify-between">
+          <div className="h-11/12 w-full flex flex-col justify-between mt-8 md:mt-0">
             <div></div>
             <section className="w-full md:w-11/12 mx-auto max-w-md">
               <div className="text-primary font-display text-2xl text-center mb-4 md:mb-6">
                 {title}
               </div>
-              {form}
+              {<div className="mb-6">{form}</div>}
             </section>
             <section className="text-center p-4 border-t border-primary-lightest">
               The Sidemen
