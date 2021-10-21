@@ -5,12 +5,12 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout.";
-import DashboardProvider from "../context/DashboardContext";
+import DashboardProvider from "../contexts/DashboardContext";
 import useGlobal from "../hooks/useGlobal";
 import {
   DashboardPetugasRoutes,
   DashboardCustomerRoutes,
-} from "../router/dashboard.routes.js";
+} from "../routers/dashboard.routes.js";
 
 export default function Dashboard() {
   const { account } = useGlobal();

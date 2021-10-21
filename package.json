@@ -4,13 +4,14 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.4",
+    "@craco/craco": "^6.3.0",
     "@react-pdf/renderer": "^1.6.17",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.16.13",
     "axios": "^0.21.1",
-    "bootstrap": "5.1.0",
+    "craco-less": "^1.20.0",
     "framer-motion": "^4.1.17",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
@@ -34,10 +35,10 @@
     "workbox-streams": "^6.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "test:cypress": "cypress open",
-    "test:jest": "react-scripts test",
+    "test:jest": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -66,9 +67,12 @@
   "devDependencies": {
     "@cypress/react": "^5.10.0",
     "@cypress/webpack-dev-server": "^1.6.0",
+    "autoprefixer": "9",
     "cypress": "^8.5.0",
     "eslint-config-prettier": "8.3.0",
+    "postcss": "7",
     "prettier": "^2.4.1",
-    "serve": "^12.0.1"
+    "serve": "^12.0.1",
+    "tailwindcss": "yarn:@tailwindcss/postcss7-compat"
   }
 }
