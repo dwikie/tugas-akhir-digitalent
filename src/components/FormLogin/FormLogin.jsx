@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { Row, Form, Input, Button, Typography, Alert } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import { Form, Input, Alert } from "antd";
+import { Button } from "../elements";
 import useGlobal from "../../hooks/useGlobal";
-
-const { Text } = Typography;
 
 export default function FormLogin() {
   const history = useHistory();
@@ -38,7 +36,7 @@ export default function FormLogin() {
     <>
       {error && (
         <Alert
-          style={{ marginBottom: "-1.25rem", marginTop: "1.75rem" }}
+          className="my-6"
           message={error}
           type="error"
           showIcon
@@ -47,13 +45,16 @@ export default function FormLogin() {
         />
       )}
       <Form
-        id="login-form"
-        style={{ margin: "2.75rem 0" }}
         form={form}
         onFinish={handleOnFinish}
+        className="mt-4"
+        layout="vertical"
+        autoComplete="off"
+        requiredMark="optional"
       >
         <Form.Item
-          name={["username"]}
+          label="Username"
+          name="username"
           rules={[
             {
               required: true,
@@ -61,15 +62,12 @@ export default function FormLogin() {
             },
           ]}
         >
-          <Input
-            prefix={<UserOutlined style={{ marginRight: "8px" }} />}
-            placeholder="Username"
-            name="username"
-          />
+          <Input size="large" placeholder="Username" name="username" />
         </Form.Item>
 
         <Form.Item
-          name={["password"]}
+          label="Password"
+          name="password"
           rules={[
             {
               required: true,
@@ -77,30 +75,18 @@ export default function FormLogin() {
             },
           ]}
         >
-          <Input.Password
-            prefix={<LockOutlined style={{ marginRight: "8px" }} />}
-            placeholder="Password"
-            name="password"
-          />
+          <Input.Password size="large" placeholder="Password" name="password" />
         </Form.Item>
-
-        <Row justify="space-between">
-          <Button type="link" style={{ padding: 0 }}>
-            <strong>Lupa Password</strong>
-          </Button>
+        <div className="mt-10">
           <Button
-            type="primary"
-            loading={loggingIn}
             htmlType="submit"
-            style={{ display: "flex", alignItems: "center" }}
+            prefixCls="w-full flex items-center justify-center"
+            loading={loggingIn}
           >
-            <strong>Masuk</strong>
+            Masuk
           </Button>
-        </Row>
+        </div>
       </Form>
-      <Text type="secondary">
-        Belum punya akun ? daftar <Link to="/register">disini</Link>
-      </Text>
     </>
   );
 }
