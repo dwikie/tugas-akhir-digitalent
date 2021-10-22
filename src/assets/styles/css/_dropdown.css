@@ -1,0 +1,8 @@
+.ant-dropdown-menu {
+  @apply rounded-md;
+  @apply shadow-md;
+}
+.ant-dropdown-menu-item {
+  @apply px-6;
+  @apply text-primary;
+}

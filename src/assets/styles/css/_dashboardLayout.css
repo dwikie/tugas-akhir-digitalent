@@ -1,0 +1,41 @@
+.dashboard .ant-layout {
+  @apply min-h-screen;
+  @apply bg-primary-lightest !important;
+}
+
+.dashboard .ant-layout-sider,
+.dashboard .ant-layout-sider-children > .ant-menu {
+  @apply bg-primary;
+  @apply text-white;
+}
+
+.dashboard .ant-menu-item {
+  @apply text-primary-light !important;
+  @apply rounded-lg;
+  @apply mb-3 !important;
+  @apply hover:bg-primary-light hover:text-primary-dark !important;
+}
+
+.dashboard .ant-menu-item.ant-menu-item-selected {
+  @apply text-white !important;
+  @apply bg-primary-dark !important;
+}
+
+.dashboard .ant-menu.ant-menu-root {
+  @apply transition-all ease-in-out duration-75 !important;
+  @apply px-6;
+}
+
+.dashboard .ant-layout-sider-collapsed .ant-menu.ant-menu-root {
+  @apply px-3;
+}
+
+.dashboard .sidebar-texture {
+  background-image: url("../../images/login-register-texture.jpg");
+  background-size: contain;
+  opacity: 0.1;
+}
+
+.dashboard header .ant-avatar {
+  @apply bg-primary;
+}

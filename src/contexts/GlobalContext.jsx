@@ -1,5 +1,4 @@
 import React from "react";
-import { message } from "antd";
 import { useHistory } from "react-router";
 import {
   IsAuthenticated,
@@ -30,14 +29,6 @@ export default function GlobalProvider(props) {
     logout: () => {
       DeAuthenticate();
       replace("/");
-    },
-    message: (text, type, duration = 3) => {
-      // Type: error, loading, success, warning, info
-      message.open({
-        content: text,
-        type: type,
-        duration: duration,
-      });
     },
   };
 

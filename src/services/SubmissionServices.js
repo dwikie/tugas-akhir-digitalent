@@ -173,3 +173,50 @@ export function CreateSubmission(submission) {
     cancel: cancelSource.cancel,
   };
 }
+
+export function EditSubmission(submission) {
+  const cancelSource = source();
+  return {
+    start: function () {
+      return new Promise(async (resolve, reject) => {
+        return await httpAuth
+          .put(
+            "/customer_update_submission",
+            {
+              ...submission,
+              TanggalLahir: DateConversion.MomentToISOString(
+                submission.TanggalLahir,
+              ),
+              SlipGaji: submission.SlipGaji[0]?.originFileObj
+                ? await FileToBase64String(submission.SlipGaji[0].originFileObj)
+                : submission.SlipGaji[0].name,
+              BuktiKtp: submission.BuktiKtp[0]?.originFileObj
+                ? await FileToBase64String(submission.BuktiKtp[0].originFileObj)
+                : submission.BuktiKtp[0].name,
+              PendapatanPerbulan: parseInt(submission.PendapatanPerbulan),
+            },
+            {
+              cancelToken: cancelSource.token,
+            },
+          )
+          .then(
+            (res) => {
+              try {
+                let result = res.data;
+                resolve(result);
+              } catch (err) {
+                reject(err);
+              }
+            },
+            (err) => {
+              reject(err);
+            },
+          )
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    cancel: cancelSource.cancel,
+  };
+}

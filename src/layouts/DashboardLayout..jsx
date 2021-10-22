@@ -44,27 +44,15 @@ export default function DashboardLayout({ routes }) {
   }, [routes]);
 
   return (
-    <Layout>
-      <Navbar />
-      <Layout style={{ position: "relative", minHeight: "calc(100vh - 64px)" }}>
-        <Router>
-          <Sidebar sidebarItems={sidebarItems} />
+    <Layout className="dashboard">
+      <Router>
+        <Sidebar sidebarItems={sidebarItems} />
+        <Layout className="relative min-h-screen">
+          <div className="sidebar-texture absolute top-0 left-0 w-full h-full"></div>
+          <Navbar />
           <Suspense fallback={<PageIndicator />}>
-            <Content
-              style={{
-                padding: "1.25rem",
-                boxShadow: "0px 0px 8px 2px inset #33333315",
-              }}
-            >
-              <div
-                className="content bg-white"
-                style={{
-                  padding: "1.75rem 1rem",
-                  borderRadius: "4px",
-                  boxShadow: "0px 0px 8px 2px #33333310",
-                  overflow: "hidden",
-                }}
-              >
+            <Content className="py-4 px-4 sm:px-16 z-50">
+              <div className="px-6 py-8 container mx-auto bg-white rounded-lg sm:rounded-md shadow-lg">
                 <SwitchMotion
                   animate={switchAnimation.animate}
                   initial={switchAnimation.initial}
@@ -74,8 +62,8 @@ export default function DashboardLayout({ routes }) {
               </div>
             </Content>
           </Suspense>
-        </Router>
-      </Layout>
+        </Layout>
+      </Router>
     </Layout>
   );
 }

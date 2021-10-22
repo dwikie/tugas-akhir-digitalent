@@ -5,21 +5,23 @@ import { FormatNumberCurrency, StatusPengajuan } from "../../utils";
 import { DateToLocale } from "../../utils/DateConversion";
 import DisplayRow from "../DisplayRow";
 
-export default function DisplayPengajuanKPR({ data, showStatus }) {
+export default function DisplayPengajuanKPR({ data, showStatus, showTitle }) {
   return (
     <>
-      <Title
-        title={
-          data?.ID ? (
-            "Data Diri"
-          ) : (
-            <Skeleton
-              paragraph={null}
-              title={{ style: { margin: "0 auto" }, width: "180px" }}
-            />
-          )
-        }
-      />
+      {showTitle ? (
+        <Title
+          title={
+            data?.ID ? (
+              "Data Diri"
+            ) : (
+              <Skeleton
+                paragraph={null}
+                title={{ style: { margin: "0 auto" }, width: "180px" }}
+              />
+            )
+          }
+        />
+      ) : null}
       <section
         className="display-container"
         id="data-diri"
