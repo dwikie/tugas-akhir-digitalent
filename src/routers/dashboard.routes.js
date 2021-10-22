@@ -5,8 +5,14 @@ const BerandaCustomer = lazy(() => import("../containers/Customer/Beranda"));
 const KelengkapanDokumen = lazy(() =>
   import("../containers/Customer/KelengkapanDokumen"),
 );
+const RevisiKelengkapanDokumen = lazy(() =>
+  import("../containers/Customer/RevisiKelengkapanDokumen"),
+);
 const BuatPengajuan = lazy(() =>
   import("../containers/Customer/BuatPengajuan"),
+);
+const RevisiPengajuanKPR = lazy(() =>
+  import("../containers/Customer/RevisiPengajuanKPR/"),
 );
 const BerandaOfficer = lazy(() => import("../containers/Officer/Beranda"));
 const DetailPengajuan = lazy(() =>
@@ -21,11 +27,8 @@ export const DashboardPetugasRoutes = [
   {
     path: "/dashboard",
     exact: true,
+    redirect: "/dashboard/pengajuan",
     component: BerandaOfficer,
-    sidebarNav: {
-      icon: HomeOutlined,
-      label: "Beranda",
-    },
   },
   {
     path: "/dashboard/pengajuan",
@@ -72,9 +75,19 @@ export const DashboardCustomerRoutes = [
     },
   },
   {
+    path: "/dashboard/revisi-pengajuan",
+    exact: true,
+    component: RevisiPengajuanKPR,
+  },
+  {
     path: "/dashboard/dokumen-tambahan",
     exact: true,
     component: KelengkapanDokumen,
+  },
+  {
+    path: "/dashboard/revisi-dokumen-tambahan",
+    exact: true,
+    component: RevisiKelengkapanDokumen,
   },
   {
     path: "/dashboard/*",

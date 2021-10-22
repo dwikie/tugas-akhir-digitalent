@@ -4,9 +4,11 @@ import { Row, Col, Skeleton } from "antd";
 export default function DisplayRow({ data }) {
   return (
     <Row gutter={[8, 4]} style={{ marginBottom: ".5rem" }}>
-      <Col xs={14} sm={8} md={6} lg={5} xl={4} xxl={3}>
+      <Col xs={14} sm={10} md={8} lg={5} xl={4} xxl={3}>
         {data?.value ? (
-          <span style={{ fontWeight: "bold" }}>{data.label}</span>
+          <span style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+            {data.label}
+          </span>
         ) : (
           <Skeleton
             title={false}
@@ -17,8 +19,8 @@ export default function DisplayRow({ data }) {
       </Col>
       <Col
         xs={24}
-        sm={16}
-        md={18}
+        sm={14}
+        md={16}
         lg={19}
         xl={20}
         xxl={21}

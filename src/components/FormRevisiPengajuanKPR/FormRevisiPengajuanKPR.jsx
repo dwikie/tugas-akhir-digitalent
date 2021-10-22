@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DisplayRow from "../DisplayRow";
 import { Button, Col, DatePicker, Form, Input, Row, Upload, Alert } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { CreateSubmission } from "../../services/SubmissionServices";
+import { EditSubmission } from "../../services/SubmissionServices";
 
-export default function FormPengajuanKPR() {
+export default function FormRevisiPengajuanKPR({ data }) {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [form] = Form.useForm();
@@ -26,7 +26,7 @@ export default function FormPengajuanKPR() {
     setIsLoading(true);
 
     try {
-      await CreateSubmission(value).start();
+      await EditSubmission(value).start();
       form.resetFields();
       setResponse({
         message: "Data anda telah berhasil diajukan.",
@@ -61,6 +61,10 @@ export default function FormPengajuanKPR() {
       }
     }
   };
+
+  useEffect(() => {
+    form.setFieldsValue(data);
+  }, [form, data]);
 
   return (
     <>

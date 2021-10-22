@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FilePdfOutlined } from "@ant-design/icons";
-import { Button, Col, Input, Row } from "antd";
+import { Col, Row } from "antd";
 import Title from "../../../components/Title";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useHistory, useRouteMatch } from "react-router";
@@ -8,6 +8,7 @@ import DaftarPengajuanTable from "../../../components/DaftarPengajuanTable";
 import { GetAllSubmission } from "../../../services/SubmissionServices";
 import Columns from "./TableColumns";
 import ModalDaftarPengajuan from "../../../components/ModalDaftarPengajuan";
+import { Button } from "../../../components/elements";
 import ReportStyle from "./ReportStyle";
 // import DaftarPengajuanPagination from "../../../components/DaftarPengajuanPagination/DaftarPengajuanPagination";
 
@@ -73,21 +74,19 @@ export default function DaftarPengajuan() {
         <Title title="Daftar Pengajuan" />
       </Col>
       <Row
-        justify={"space-between"}
+        justify={"end"}
         style={{ flexDirection: breakPoint.md ? "row" : "column-reverse" }}
         gutter={[0, 24]}
       >
         <Col sm={24} md={8}>
-          <Input placeholder="Cari.." allowClear />
-        </Col>
-        <Col sm={24} md={8}>
           <Button
+            prefixCls="justify-between"
             onClick={async () => await showModal()}
             style={{ width: "100%" }}
-            icon={<FilePdfOutlined />}
             text="Download Daftar Pengajuan"
           >
-            Download List Pengajuan
+            <FilePdfOutlined /> Download List Pengajuan
+            <div></div>
           </Button>
           <ModalDaftarPengajuan
             reportStyle={ReportStyle}

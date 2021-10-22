@@ -62,6 +62,7 @@ export default function TableDaftarPengajuan({
         />
       ) : null}
       <Table
+        className="overflow-x-auto"
         data-testid="table-daftar-pengajuan"
         pagination={{
           pageSize: isPageSize,

@@ -33,6 +33,7 @@ export default function DetailPengajuan() {
         <>
           <Col>
             <DisplayPengajuanKPR
+              showTitle
               data={submission}
               showStatus={submission?.Status !== 1}
             />
@@ -47,6 +48,7 @@ export default function DetailPengajuan() {
           {submission?.CompleteDoc?.ID ? (
             <Col>
               <DisplayKelengkapanDokumen
+                showTitle
                 data={submission?.CompleteDoc}
                 showStatus={submission?.CompleteDoc?.Status !== 1}
               />

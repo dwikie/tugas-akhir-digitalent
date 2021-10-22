@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Form,
@@ -11,9 +11,9 @@ import {
 } from "antd";
 import DisplayRow from "../DisplayRow";
 import { UploadOutlined } from "@ant-design/icons";
-import { CreateAdditionalDocument } from "../../services/AdditionalDocumentServices";
+import { EditAdditionalDocument } from "../../services/AdditionalDocumentServices";
 
-export default function FormKelengkapanDokumen() {
+export default function FormRevisiKelengkapanDokumen({ data }) {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [form] = Form.useForm();
@@ -32,9 +32,10 @@ export default function FormKelengkapanDokumen() {
   };
 
   const onFinish = async (value) => {
+    console.log(value);
     setIsLoading(true);
     try {
-      await CreateAdditionalDocument(value).start();
+      await EditAdditionalDocument(value).start();
       setIsLoading(false);
       form.resetFields();
       setResponse({
@@ -59,6 +60,10 @@ export default function FormKelengkapanDokumen() {
       }
     }
   };
+
+  useEffect(() => {
+    form.setFieldsValue(data);
+  }, [form, data]);
 
   return (
     <>

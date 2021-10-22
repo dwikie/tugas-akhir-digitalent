@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import "~antd/dist/antd.css";
+@import url("./assets/styles/");
 
 .ant-alert[class*="ant-alert-"] {
   @apply flex items-center my-4;
@@ -66,4 +67,8 @@ button:disabled {
 
 .ant-carousel .slick-track {
   @apply w-screen;
+}
+
+a {
+  @apply transition-none;
 }

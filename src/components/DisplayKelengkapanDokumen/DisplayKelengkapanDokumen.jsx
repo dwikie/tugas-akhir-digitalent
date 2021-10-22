@@ -1,24 +1,30 @@
-import { Badge, Col, Skeleton } from "antd";
+import { Badge, Col, Skeleton, Typography } from "antd";
 import React from "react";
 import { FormatNumberCurrency, StatusPengajuan } from "../../utils";
 import DisplayRow from "../DisplayRow";
 import Title from "../Title";
 
-export default function DisplayKelengkapanDokumen({ data, showStatus }) {
+export default function DisplayKelengkapanDokumen({
+  data,
+  showStatus,
+  showTitle,
+}) {
   return (
     <>
-      <Title
-        title={
-          data?.ID ? (
-            "Kelengkapan Data KPR"
-          ) : (
-            <Skeleton
-              paragraph={null}
-              title={{ style: { margin: "0 auto" }, width: "180px" }}
-            />
-          )
-        }
-      />
+      {showTitle ? (
+        <Title
+          title={
+            data?.ID ? (
+              "Kelengkapan Data KPR"
+            ) : (
+              <Skeleton
+                paragraph={null}
+                title={{ style: { margin: "0 auto" }, width: "180px" }}
+              />
+            )
+          }
+        />
+      ) : null}
       <section
         className="display-container"
         id="data-kpr"
@@ -53,7 +59,15 @@ export default function DisplayKelengkapanDokumen({ data, showStatus }) {
           <DisplayRow
             data={{
               label: "Dokumen Pendukung",
-              value: data && data?.DokumenPendukung,
+              value: data && (
+                <Typography.Link
+                  href={`${
+                    new URL(process.env.REACT_APP_API_URL).origin
+                  }/download/${data?.DokumenPendukung}`}
+                >
+                  File Dokumen Pendukung
+                </Typography.Link>
+              ),
             }}
           />
           {showStatus ? (

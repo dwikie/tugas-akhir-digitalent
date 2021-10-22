@@ -1,6 +1,6 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 export default function SwitchMotion({ routes, initial, animate, exit }) {
   return (
@@ -13,7 +13,11 @@ export default function SwitchMotion({ routes, initial, animate, exit }) {
             path={route.path}
           >
             <motion.div initial={initial} animate={animate} exit={exit}>
-              <route.component />
+              {route.redirect ? (
+                <Redirect to={`${route.redirect}`} />
+              ) : (
+                <route.component />
+              )}
             </motion.div>
           </Route>
         ))}

@@ -5,19 +5,11 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Col,
-  Layout,
-  Row,
-  Dropdown,
-  Menu,
-  Typography,
-  Space,
-} from "antd";
+import { Col, Layout, Row, Dropdown, Menu } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import useDashboard from "../../hooks/useDashboard";
 import useGlobal from "../../hooks/useGlobal";
+import { Button } from "../elements";
 
 const { Header } = Layout;
 
@@ -31,7 +23,7 @@ export default function Navbar() {
   }
 
   const menu = (
-    <Menu>
+    <Menu className="rounded-lg p-20">
       <Menu.Item onClick={logout} key="logout" icon={<LogoutOutlined />}>
         Logout
       </Menu.Item>
@@ -39,46 +31,34 @@ export default function Navbar() {
   );
 
   return (
-    <Header
-      className="bg-white"
-      style={{ padding: 0, display: "flex", alignItems: "center", zIndex: 1 }}
-    >
-      <Row
-        justify="space-between"
-        align="middle"
-        style={{ flex: 1, padding: "0 1.25rem" }}
-      >
-        <Col>
-          <Space size={18}>
-            <Button
-              type="default"
-              onClick={handleCollapsed}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
+    <>
+      <Header className="relative p-0 flex items-center z-10">
+        <Row
+          justify="space-between"
+          align="middle"
+          style={{ flex: 1, padding: "1.5rem 1.25rem" }}
+        >
+          <Col>
+            <Button htmlType="button" type="outlined" onClick={handleCollapsed}>
               {isVisible ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             </Button>
-            <Typography.Title level={4} style={{ margin: 0 }}>
-              Home Loans A
-            </Typography.Title>
-          </Space>
-        </Col>
-        <Col>
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <Avatar
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-              icon={<UserOutlined />}
-            />
-          </Dropdown>
-        </Col>
-      </Row>
-    </Header>
+          </Col>
+          <Col>
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <Avatar
+                className="bg-primary"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+                icon={<UserOutlined />}
+              />
+            </Dropdown>
+          </Col>
+        </Row>
+      </Header>
+    </>
   );
 }

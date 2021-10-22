@@ -15,10 +15,10 @@ export default function Button({
   return (
     <button
       {...rest}
-      className={`${prefixCls && prefixCls} ${buttonThemes(
+      className={`${prefixCls || null} ${buttonThemes(
         type,
         variant,
-      )} py-2.5 px-4 rounded-sm transition-colors duration-300 relative`}
+      )} py-2.5 px-4 rounded-md transition-colors duration-300 relative leading-6 flex items-center`}
       type={htmlType}
       disabled={loading}
     >
