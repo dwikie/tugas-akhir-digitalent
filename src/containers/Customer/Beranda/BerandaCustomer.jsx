@@ -1,6 +1,5 @@
-import { Button, Col, Row, Steps } from "antd";
+import { Col, Row, Steps } from "antd";
 import {
-  CaretRightFilled,
   ProfileOutlined,
   SmileOutlined,
   SolutionOutlined,
@@ -10,6 +9,7 @@ import DisplayPengajuanKPR from "../../../components/DisplayPengajuanKPR";
 import DisplayKelengkapanDokumen from "../../../components/DisplayKelengkapanDokumen";
 import { useHistory, useRouteMatch } from "react-router";
 import { GetCustomerSubmission } from "../../../services/SubmissionServices";
+import { Button } from "../../../components/elements";
 
 export default function BerandaCustomer() {
   const [detailPengajuan, setDetailPengajuan] = useState({});
@@ -54,7 +54,7 @@ export default function BerandaCustomer() {
                 {detailPengajuan?.Status === 3 &&
                 !detailPengajuan.CompleteDoc?.ID ? (
                   <Button
-                    icon={<CaretRightFilled />}
+                    prefixCls="my-4"
                     type={"primary"}
                     onClick={() => push(`${url}/dokumen-tambahan`)}
                   >
@@ -63,7 +63,7 @@ export default function BerandaCustomer() {
                 ) : null}
                 {detailPengajuan?.Status === 2 ? (
                   <Button
-                    icon={<ProfileOutlined />}
+                    prefixCls="my-4"
                     type={"primary"}
                     danger
                     onClick={() => push(`${url}/revisi-pengajuan`)}
@@ -90,18 +90,16 @@ export default function BerandaCustomer() {
                     showStatus
                   />
                   <Col>
-                    <Row justify="end">
-                      {detailPengajuan.CompleteDoc?.Status === 2 ? (
-                        <Button
-                          icon={<ProfileOutlined />}
-                          type={"primary"}
-                          danger
-                          onClick={() => push(`${url}/revisi-dokumen-tambahan`)}
-                        >
-                          Reset Pengajuan KPR
-                        </Button>
-                      ) : null}
-                    </Row>
+                    {detailPengajuan.CompleteDoc?.Status === 2 ? (
+                      <Button
+                        prefixCls="my-4"
+                        type={"primary"}
+                        danger
+                        onClick={() => push(`${url}/revisi-dokumen-tambahan`)}
+                      >
+                        Reset Pengajuan KPR
+                      </Button>
+                    ) : null}
                   </Col>
                 </>
               ) : null

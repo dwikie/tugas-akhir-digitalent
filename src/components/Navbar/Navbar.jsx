@@ -23,7 +23,7 @@ export default function Navbar() {
   }
 
   const menu = (
-    <Menu className="rounded-lg p-20">
+    <Menu className="rounded-lg">
       <Menu.Item onClick={logout} key="logout" icon={<LogoutOutlined />}>
         Logout
       </Menu.Item>

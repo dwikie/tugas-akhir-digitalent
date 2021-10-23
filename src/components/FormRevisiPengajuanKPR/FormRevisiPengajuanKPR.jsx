@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import DisplayRow from "../DisplayRow";
-import { Button, Col, DatePicker, Form, Input, Row, Upload, Alert } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Upload,
+  Alert,
+  message as Toast,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { EditSubmission } from "../../services/SubmissionServices";
 
@@ -8,6 +19,7 @@ export default function FormRevisiPengajuanKPR({ data }) {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [form] = Form.useForm();
+  const { replace } = useHistory();
 
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -29,9 +41,13 @@ export default function FormRevisiPengajuanKPR({ data }) {
       await EditSubmission(value).start();
       form.resetFields();
       setResponse({
-        message: "Data anda telah berhasil diajukan.",
+        message: "Data berhasil di update",
         type: "success",
       });
+      setTimeout(() => {
+        replace("/dashboard");
+        Toast.success("Data Diri berhasil di update!");
+      }, 500);
     } catch (err) {
       setIsLoading(false);
       switch (err.response.status) {

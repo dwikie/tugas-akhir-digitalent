@@ -1,6 +1,17 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import DisplayRow from "../DisplayRow";
-import { Button, Col, DatePicker, Form, Input, Row, Upload, Alert } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Upload,
+  Alert,
+  message as Toast,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { CreateSubmission } from "../../services/SubmissionServices";
 
@@ -8,6 +19,7 @@ export default function FormPengajuanKPR() {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [form] = Form.useForm();
+  const { replace } = useHistory();
 
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -32,6 +44,10 @@ export default function FormPengajuanKPR() {
         message: "Data anda telah berhasil diajukan.",
         type: "success",
       });
+      setTimeout(() => {
+        replace("/dashboard");
+        Toast.success("Data berhasil diajukan!");
+      }, 500);
     } catch (err) {
       setIsLoading(false);
       switch (err.response.status) {

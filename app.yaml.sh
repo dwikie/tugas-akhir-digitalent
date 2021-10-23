@@ -9,9 +9,9 @@ service: $TEAM_NAME
 handlers:
   - url: /static
     static_dir: build/static
-  - url: /(.*\.(json|ico|js|png))$
+  - url: /(.*\.(json|ico|js|png|svg))$
     static_files: build/\1
-    upload: build/.*\.(json|ico|js|png)$
+    upload: build/.*\.(json|ico|js|png|svg)$
   - url: .*
     static_files: build/index.html
     upload: build/index.html

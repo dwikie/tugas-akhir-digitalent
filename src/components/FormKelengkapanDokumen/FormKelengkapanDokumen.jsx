@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Form,
@@ -8,6 +9,7 @@ import {
   Select,
   Upload,
   Alert,
+  message as Toast,
 } from "antd";
 import DisplayRow from "../DisplayRow";
 import { UploadOutlined } from "@ant-design/icons";
@@ -17,6 +19,7 @@ export default function FormKelengkapanDokumen() {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [form] = Form.useForm();
+  const { replace } = useHistory();
 
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -41,6 +44,10 @@ export default function FormKelengkapanDokumen() {
         message: "Data anda telah berhasil diajukan.",
         type: "success",
       });
+      setTimeout(() => {
+        replace("/dashboard");
+        Toast.success("Data KPR berhasil disubmit!");
+      }, 500);
     } catch (err) {
       setIsLoading(false);
       switch (err.response.status) {
