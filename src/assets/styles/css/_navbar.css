@@ -1,0 +1,5 @@
+.ant-layout-header {
+  background: transparent;
+  @apply px-4;
+  @apply h-auto;
+}

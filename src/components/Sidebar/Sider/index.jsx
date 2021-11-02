@@ -16,18 +16,28 @@ export default function SidebarSider({ menuItems, isVisible }) {
 
   return (
     <Layout.Sider
-      theme="light"
+      theme="dark"
       trigger={null}
       collapsible
       collapsed={isVisible}
+      width="250"
       breakpoint={"xl"}
       collapsedWidth={collapsedWidth}
       onBreakpoint={(breakpoint) =>
-        breakpoint ? setCollapsedWidth(0) : setCollapsedWidth(80)
+        breakpoint ? setCollapsedWidth(0) : setCollapsedWidth(100)
       }
-      style={{ zIndex: 1 }}
+      className="py-6 relative"
     >
-      <Menu theme="light" mode="inline" selectedKeys={[pathname]}>
+      <div className="sidebar-texture absolute top-0 left-0 w-full h-full opacity-10"></div>
+      <div className="flex flex-col items-center mb-6 px-4 logo-wrapper">
+        <img
+          src="/home-loans-text.svg"
+          alt="Home Loans"
+          className="filter grayscale"
+          width="110"
+        />
+      </div>
+      <Menu theme="dark" mode="inline" selectedKeys={[pathname]}>
         {Array.from(menuItems).map((item) => {
           return (
             <Menu.Item
